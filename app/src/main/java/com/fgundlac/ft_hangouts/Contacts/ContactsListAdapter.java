@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.fgundlac.ft_hangouts.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 

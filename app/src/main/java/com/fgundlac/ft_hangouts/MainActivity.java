@@ -14,7 +14,6 @@ import com.fgundlac.ft_hangouts.Contacts.ContactsListAdapter;
 import com.fgundlac.ft_hangouts.Contacts.ShowContactActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends BaseClass
 {
