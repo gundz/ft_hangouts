@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="@string/settings_theme_title">
+		<ListPreference
+			android:key="actionBarColorList"
+			android:dialogTitle="@string/settings_actionBarColorList_title"
+			android:entries="@array/color_list"
+			android:entryValues="@array/color_list"
+			android:title="@string/settings_actionBarColorList_title"/>
+	</PreferenceCategory>
+</PreferenceScreen>
