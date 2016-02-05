@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.fgundlac.ft_hangouts.Contacts.Contact;
 import com.fgundlac.ft_hangouts.Contacts.ContactsListAdapter;
+import com.fgundlac.ft_hangouts.Contacts.ShowContactActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +49,19 @@ public class MainActivity extends BaseClass
 
 		contactListAdapter = new ContactsListAdapter(this, contactList);
 		listView.setAdapter(contactListAdapter);
+		listView.setOnItemClickListener(contactClickListener);
 		contactListAdapter.notifyDataSetChanged();
 	}
+
+	public AdapterView.OnItemClickListener contactClickListener = new AdapterView.OnItemClickListener()
+	{
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+		{
+			Intent intent = new Intent(MainActivity.this, ShowContactActivity.class);
+			startActivity(intent);
+		}
+	};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
