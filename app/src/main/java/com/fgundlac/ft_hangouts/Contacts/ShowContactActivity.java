@@ -117,7 +117,7 @@ public class ShowContactActivity extends BaseClass
 		@Override
 		public void onClick(View v)
 		{
-			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(contact.getNumber()));
+			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact.getNumber()));
 			if (ActivityCompat.checkSelfPermission(ShowContactActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
 				return;
 			startActivity(intent);
