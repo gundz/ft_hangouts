@@ -5,6 +5,7 @@ package com.fgundlac.ft_hangouts.Contacts;
  */
 public class Contact
 {
+	protected long      id;
 	protected String    name;
 	protected String    lastName;
 	protected String    nickname;
@@ -19,6 +20,16 @@ public class Contact
 	{
 		this.name = name;
 		this.number = number;
+	}
+
+	public long getId()
+	{
+		return id;
+	}
+
+	public void setId(long id)
+	{
+		this.id = id;
 	}
 
 	public String getName()
