@@ -25,13 +25,13 @@ public class ContactsListAdapter extends BaseAdapter
 	class ContactListViewHolder
 	{
 		public TextView textViewName;
-		public TextView textViewLastName;
+		public TextView textViewNickname;
 		public TextView textViewNumber;
 
 		public ContactListViewHolder(View base)
 		{
 			textViewName = (TextView) base.findViewById(R.id.nameTextView);
-			textViewLastName = (TextView) base.findViewById(R.id.lastNameTextView);
+			textViewNickname = (TextView) base.findViewById(R.id.nicknameTextView);
 			textViewNumber = (TextView) base.findViewById(R.id.numberTextView);
 		}
 	}
@@ -82,8 +82,8 @@ public class ContactsListAdapter extends BaseAdapter
 		}
 
 		contact = contactList.get(position);
-		viewHolder.textViewName.setText(contact.getName());
-		viewHolder.textViewLastName.setText(contact.getLastName());
+		viewHolder.textViewName.setText(contact.getName() + " " + contact.getLastName());
+		viewHolder.textViewNickname.setText(contact.getNickname());
 		viewHolder.textViewNumber.setText(contact.getNumber());
 
 		return v;
