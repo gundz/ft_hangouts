@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.fgundlac.ft_hangouts.Contacts.Contact;
+import com.fgundlac.ft_hangouts.Contacts.ContactsDataSource;
 import com.fgundlac.ft_hangouts.Contacts.ContactsListAdapter;
 import com.fgundlac.ft_hangouts.Contacts.ShowContactActivity;
 
@@ -39,12 +40,11 @@ public class MainActivity extends BaseClass
 	{
 		super.onResume();
 
-		for (int i = 0; i < 10; i++)
-		{
-			Contact c = new Contact("Name " + String.valueOf(i), "0651358408");
-			c.setLastName("last name");
-			contactList.add(c);
-		}
+		ContactsDataSource              db = new ContactsDataSource(this);
+
+		db.open();
+		contactList = db.getAllContacts();
+		db.close();
 
 		contactListAdapter = new ContactsListAdapter(this, contactList);
 		listView.setAdapter(contactListAdapter);
@@ -65,7 +65,7 @@ public class MainActivity extends BaseClass
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		MenuInflater    inflater = getMenuInflater();
+		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main, menu);
 		return true;
 	}
