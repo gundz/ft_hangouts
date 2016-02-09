@@ -1,12 +1,14 @@
 package com.fgundlac.ft_hangouts.Contacts;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -114,7 +116,30 @@ public class ShowContactActivity extends BaseClass
 
 	protected void deleteContact()
 	{
+		new AlertDialog.Builder(ShowContactActivity.this)
+				.setTitle(getResources().getString(R.string.contact_delete_entry))
+				.setMessage(getResources().getString(R.string.contact_delete_warning))
+				.setPositiveButton(getResources().getString(R.string.delete), new DialogInterface.OnClickListener()
+				{
+					@Override
+					public void onClick(DialogInterface dialog, int which)
+					{
+						database.open();
+						database.deleteContact(contact);
+						database.close();
+						finish();
+					}
+				})
+				.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener()
+				{
+					@Override
+					public void onClick(DialogInterface dialog, int which)
+					{
 
+					}
+				})
+				.setIcon(R.drawable.ic_action_warning)
+				.show();
 	}
 
 	public View.OnClickListener callOnClickListener = new View.OnClickListener()
