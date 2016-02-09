@@ -1,11 +1,14 @@
 package com.fgundlac.ft_hangouts.Contacts;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,7 +41,7 @@ public class ShowContactActivity extends BaseClass
 
 		if (ActivityCompat.checkSelfPermission(ShowContactActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
 		{
-			smsButton.setVisibility(ImageButton.GONE);
+			callButton.setVisibility(ImageButton.GONE);
 		}
 		else
 		{
@@ -139,7 +142,13 @@ public class ShowContactActivity extends BaseClass
 		public void onClick(View v)
 		{
 			Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + contact.getEmail()));
-			startActivity(intent);
+			if (intent.resolveActivity(getPackageManager()) != null)
+				startActivity(intent);
+			else
+			{
+				Snackbar snackbar = Snackbar.make(v, "There is no email client on your device !", Snackbar.LENGTH_SHORT);
+				snackbar.show();
+			}
 		}
 	};
 
