@@ -98,21 +98,29 @@ public class ShowContactActivity extends BaseClass
 		nameTextView.setText(name);
 		nicknameTextView.setText(c.getNickname());
 
+		LinearLayout l;
+
+		l = (LinearLayout) findViewById(R.id.numberLayout);
 		if (c.getNumber() == null || c.getNumber().length() == 0)
 		{
-			LinearLayout l = (LinearLayout) findViewById(R.id.numberLayout);
 			l.setVisibility(LinearLayout.GONE);
 		}
 		else
+		{
 			numberTextView.setText(c.getNumber());
+			l.setVisibility(LinearLayout.VISIBLE);
+		}
 
+		l = (LinearLayout) findViewById(R.id.emailLayout);
 		if (c.getEmail() == null || c.getEmail().length() == 0)
 		{
-			LinearLayout l = (LinearLayout) findViewById(R.id.emailLayout);
 			l.setVisibility(LinearLayout.GONE);
 		}
 		else
+		{
 			emailTextView.setText(c.getEmail());
+			l.setVisibility(LinearLayout.VISIBLE);
+		}
 	}
 
 	protected void editContact()
