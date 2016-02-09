@@ -21,14 +21,14 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_weight="50"
-			android:text="name + last name"/>
+			android:text="@string/contact_name"/>
 
 		<TextView
 			android:id="@+id/nicknameTextView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_weight="50"
-			android:text="nickname"/>
+			android:text="@string/contact_nickname"/>
 	</LinearLayout>
 
 	<LinearLayout
@@ -41,7 +41,7 @@
 			android:layout_height="match_parent"
 			android:layout_weight="50"
 			android:gravity="center_vertical"
-			android:text="number"/>
+			android:text="@string/contact_number"/>
 
 			<LinearLayout
 				android:layout_width="match_parent"
@@ -53,12 +53,14 @@
 					android:id="@+id/callButton"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:contentDescription="@string/contact_call_contact"
 					android:src="@drawable/ic_call"/>
 
 				<ImageButton
 					android:id="@+id/smsButton"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:contentDescription="@string/contact_sms_contact"
 					android:src="@drawable/ic_sms"/>
 			</LinearLayout>
 	</LinearLayout>
@@ -74,7 +76,7 @@
 			android:layout_height="match_parent"
 			android:layout_weight="50"
 			android:gravity="center_vertical"
-			android:text="email"/>
+			android:text="@string/contact_email"/>
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -86,6 +88,7 @@
 				android:id="@+id/emailButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:contentDescription="@string/contact_email_contact"
 				android:src="@drawable/ic_email"/>
 		</LinearLayout>
 	</LinearLayout>

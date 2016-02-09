@@ -3,6 +3,18 @@
 	<string name="settings_actionBarColorList_title">Choose action bar color</string>
 	<string name="settings_theme_title">Theme</string>
 	<string name="main_menu_settings">Settings</string>
+	<string name="title_activity_add_edit_contact">AddEditContactActivity</string>
+	<string name="cancel">Cancel</string>
+	<string name="contact_add">Add contact</string>
 	<string name="contact_edit">Edit contact</string>
 	<string name="contact_delete">Delete contact</string>
+	<string name="contact_save">Save contact</string>
+	<string name="contact_name">Name</string>
+	<string name="contact_last_name">Last name</string>
+	<string name="contact_nickname">Nickname</string>
+	<string name="contact_number">Number</string>
+	<string name="contact_email">Email</string>
+	<string name="contact_call_contact">Call contact</string>
+	<string name="contact_sms_contact">Send SMS to contact</string>
+	<string name="contact_email_contact">Send E-Mail to contact</string>
 </resources>

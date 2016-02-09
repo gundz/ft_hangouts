@@ -13,18 +13,18 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_weight="50"
-			android:text="name"/>
+			android:text="@string/contact_name"/>
 		<TextView
 			android:id="@+id/nicknameTextView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_weight="50"
-			android:text="last name"/>
+			android:text="@string/contact_nickname"/>
 	</LinearLayout>
 	<TextView
 		android:id="@+id/numberTextView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:text="number"/>
+		android:text="@string/contact_number"/>
 
 </LinearLayout>
