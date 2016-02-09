@@ -22,6 +22,7 @@ import com.fgundlac.ft_hangouts.R;
 
 public class ShowContactActivity extends BaseClass
 {
+	int id;
 	ContactsDataSource database;
 	Contact contact;
 	TextView nameTextView;
@@ -71,11 +72,16 @@ public class ShowContactActivity extends BaseClass
 		setContentView(R.layout.activity_show_contact);
 		initViews();
 
-		int id;
 		if ((id = getIntent().getIntExtra("com.fgundlac.ft_hangouts.contact.show", -1)) == -1)
 			finish();
 
 		database = new ContactsDataSource(this);
+	}
+
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
 
 		database.open();
 		contact = database.getContact(Long.valueOf(id));
@@ -111,7 +117,9 @@ public class ShowContactActivity extends BaseClass
 
 	protected void editContact()
 	{
-
+		Intent intent = new Intent(this, AddEditContactActivity.class);
+		intent.putExtra("com.fgundlac.ft_hangouts.contact.edit", (int)contact.getId());
+		startActivity(intent);
 	}
 
 	protected void deleteContact()

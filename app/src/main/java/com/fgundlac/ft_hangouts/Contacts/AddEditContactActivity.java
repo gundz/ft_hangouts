@@ -20,7 +20,8 @@ public class AddEditContactActivity extends BaseClass
 	EditText                    emailEditText;
 	FloatingActionButton        saveContactButton;
 
-	Contact                     contact = null;
+	Contact                     contact;
+	int                         id;
 	ContactsDataSource          database;
 
 	private void initViews()
@@ -42,7 +43,40 @@ public class AddEditContactActivity extends BaseClass
 		initViews();
 
 		database = new ContactsDataSource(this);
-		contact = new Contact();
+		if ((id = getIntent().getIntExtra("com.fgundlac.ft_hangouts.contact.edit", -1)) != -1)
+		{
+			database.open();
+			contact = database.getContact(Long.valueOf(id));
+			database.close();
+			setContactInfos(contact);
+		}
+		else
+			contact = new Contact();
+	}
+
+	private void setContactInfos(Contact c)
+	{
+		nameEditText.setText(c.getName());
+		lastNameEditText.setText(c.getLastName());
+		nicknameEditText.setText(c.getNickname());
+		numberEditText.setText(c.getNumber());
+		emailEditText.setText(c.getEmail());
+	}
+
+	public void saveContact()
+	{
+		contact.setName(nameEditText.getText().toString());
+		contact.setLastName(lastNameEditText.getText().toString());
+		contact.setNickname(nicknameEditText.getText().toString());
+		contact.setNumber(numberEditText.getText().toString());
+		contact.setEmail(emailEditText.getText().toString());
+
+		database.open();
+		if (id == -1)
+			database.insert(contact);
+		else
+			database.update(contact);
+		database.close();
 	}
 
 	public View.OnClickListener saveContactButtonListener = new View.OnClickListener()
@@ -54,19 +88,6 @@ public class AddEditContactActivity extends BaseClass
 			finish();
 		}
 	};
-
-	public void saveContact()
-	{
-		contact.setName(nameEditText.getText().toString());
-		contact.setLastName(nameEditText.getText().toString());
-		contact.setNickname(nicknameEditText.getText().toString());
-		contact.setNumber(numberEditText.getText().toString());
-		contact.setEmail(emailEditText.getText().toString());
-
-		database.open();
-		database.insert(contact);
-		database.close();
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
