@@ -106,7 +106,7 @@ public class ShowContactActivity extends BaseClass
 		else
 			numberTextView.setText(c.getNumber());
 
-		if (c.getEmail() == null || c.getNumber().length() == 0)
+		if (c.getEmail() == null || c.getEmail().length() == 0)
 		{
 			LinearLayout l = (LinearLayout) findViewById(R.id.emailLayout);
 			l.setVisibility(LinearLayout.GONE);
