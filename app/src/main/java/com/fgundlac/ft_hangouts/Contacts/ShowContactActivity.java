@@ -1,14 +1,12 @@
 package com.fgundlac.ft_hangouts.Contacts;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +20,7 @@ import com.fgundlac.ft_hangouts.R;
 
 public class ShowContactActivity extends BaseClass
 {
+	ContactsDataSource database;
 	Contact contact;
 	TextView nameTextView;
 	TextView nicknameTextView;
@@ -70,12 +69,15 @@ public class ShowContactActivity extends BaseClass
 		setContentView(R.layout.activity_show_contact);
 		initViews();
 
-		contact = new Contact();
-		contact.setName("Gundlack");
-		contact.setLastName("Florian");
-		contact.setNickname("Gundz");
-		contact.setNumber("+33651358408");
-		contact.setEmail("flogundlack@gmail.com");
+		int id;
+		if ((id = getIntent().getIntExtra("com.fgundlac.ft_hangouts.contact.show", -1)) == -1)
+			finish();
+
+		database = new ContactsDataSource(this);
+
+		database.open();
+		contact = database.getContact(Long.valueOf(id));
+		database.close();
 
 		setContactInfos(contact);
 	}

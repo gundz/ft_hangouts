@@ -63,6 +63,7 @@ public class MainActivity extends BaseClass
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 		{
 			Intent intent = new Intent(MainActivity.this, ShowContactActivity.class);
+			intent.putExtra("com.fgundlac.ft_hangouts.contact.show", (int)contactList.get(position).getId());
 			startActivity(intent);
 		}
 	};
