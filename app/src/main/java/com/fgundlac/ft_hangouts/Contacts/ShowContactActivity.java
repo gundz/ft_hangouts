@@ -175,7 +175,9 @@ public class ShowContactActivity extends BaseClass
 		@Override
 		public void onClick(View v)
 		{
-
+			Intent intent = new Intent(ShowContactActivity.this, SMSActivity.class);
+			intent.putExtra("com.fgundlac.ft_hangouts.contact.sms", (int)contact.getId());
+			startActivity(intent);
 		}
 	};
 

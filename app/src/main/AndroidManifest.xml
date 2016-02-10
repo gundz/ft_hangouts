@@ -12,6 +12,7 @@
 		android:label="@string/app_name"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
+
 		<activity android:name=".MainActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
@@ -19,18 +20,30 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
+
 		<activity
 			android:name=".PreferenceActivity"
 			android:label="Preferences"
 			android:parentActivityName=".MainActivity">
 		</activity>
+
 		<activity
 			android:name=".Contacts.ShowContactActivity"
 			android:parentActivityName=".MainActivity">
 		</activity>
-		<activity
-			android:name=".Contacts.AddEditContactActivity">
+
+		<activity android:name=".Contacts.AddEditContactActivity">
 		</activity>
+
+		<activity android:name=".Contacts.SMSActivity">
+		</activity>
+
+		<!-- Receiver for SMS -->
+		<receiver android:name=".Contacts.SMSBroadcast">
+			<intent-filter>
+				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
+			</intent-filter>
+		</receiver>
 	</application>
 
 </manifest>
