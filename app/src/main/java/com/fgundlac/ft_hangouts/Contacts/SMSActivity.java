@@ -10,15 +10,23 @@ import android.telephony.SmsMessage;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.fgundlac.ft_hangouts.BaseClass;
 import com.fgundlac.ft_hangouts.R;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
 public class SMSActivity extends BaseClass
 {
 	EditText                SMSContentEditText;
 	ImageButton             SMSSendButton;
+
+	ArrayList<SMS>          smsList = new ArrayList<SMS>();
+	SMSListAdapter          smsListAdapter;
+	ListView                listView;
 
 	ContactsDataSource      contactDatabase;
 	Contact                 contact;
@@ -28,6 +36,8 @@ public class SMSActivity extends BaseClass
 		SMSContentEditText = (EditText) findViewById(R.id.SMSEditText);
 		SMSSendButton = (ImageButton) findViewById(R.id.SMSSend);
 		SMSSendButton.setOnClickListener(sendSMSOnClickListener);
+
+		listView = (ListView) findViewById(R.id.smsListView);
 	}
 
 	@Override
@@ -44,6 +54,11 @@ public class SMSActivity extends BaseClass
 		contactDatabase.open();
 		contact = contactDatabase.getContact(Long.valueOf(id));
 		contactDatabase.close();
+
+		smsList.add(new SMS("0651358408", "sms de ouf !", SMS.Type.RECEIVED, Calendar.getInstance()));
+		smsList.add(new SMS("0651358408", "sms de ouf !", SMS.Type.SENDED, Calendar.getInstance()));
+		smsListAdapter = new SMSListAdapter(this, smsList);
+		listView.setAdapter(smsListAdapter);
 	}
 
 	public View.OnClickListener sendSMSOnClickListener = new View.OnClickListener()
