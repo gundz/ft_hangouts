@@ -1,6 +1,5 @@
 package com.fgundlac.ft_hangouts.Contacts;
 
-import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

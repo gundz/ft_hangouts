@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 /**
  * Created by flogu on 10/02/2016.
  */
@@ -38,6 +40,11 @@ public class SMSBroadcast extends BroadcastReceiver
 
 					String strMessageFrom = message.getDisplayOriginatingAddress();
 					String strMessageBody = message.getDisplayMessageBody();
+
+					SMSDataSource smsDatabase = new SMSDataSource(context);
+					smsDatabase.open();
+					SMS sms = smsDatabase.insert(new SMS(strMessageFrom, strMessageBody, SMS.Type.RECEIVED, Calendar.getInstance()));
+					smsDatabase.close();
 
 					Toast.makeText(context, "SMS Message received from: " + strMessageFrom, Toast.LENGTH_LONG).show();
 					Toast.makeText(context, "SMS Message content: " +strMessageBody, Toast.LENGTH_LONG).show();

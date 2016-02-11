@@ -5,12 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.os.Build;
+import android.telephony.PhoneNumberUtils;
 
 import com.fgundlac.ft_hangouts.MySQLiteHelper;
 
-import java.lang.reflect.Array;
-import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by flogu on 11/02/2016.
@@ -62,13 +63,27 @@ public class SMSDataSource
 	public ArrayList<SMS> getSMSFromContact(Contact contact)
 	{
 		ArrayList<SMS>              smsList = new ArrayList<SMS>();
-		Cursor                      cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.SMS_TABLE + " WHERE number = ?", new String[]{contact.getNumber()});
+		Cursor                      cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.SMS_TABLE, null);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast())
 		{
 			SMS sms = cursorToSMS(cursor);
-			smsList.add(sms);
+
+			String a, b;
+			if (Build.VERSION.SDK_INT >= 19)
+			{
+				a = PhoneNumberUtils.formatNumberToE164(sms.getNumber(), Locale.getDefault().getCountry());
+				b = PhoneNumberUtils.formatNumberToE164(contact.getNumber(), Locale.getDefault().getCountry());
+			}
+			else
+			{
+				a = sms.getNumber();
+				b = contact.getNumber();
+			}
+
+			if (PhoneNumberUtils.compare(a, b))
+				smsList.add(sms);
 			cursor.moveToNext();
 		}
 		cursor.close();

@@ -2,7 +2,6 @@ package com.fgundlac.ft_hangouts.Contacts;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.Layout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +12,7 @@ import android.widget.TextView;
 
 import com.fgundlac.ft_hangouts.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -98,7 +94,7 @@ public class SMSListAdapter extends BaseAdapter
 			viewHolder.SMSRelativeLayout.setGravity(Gravity.LEFT);
 		}
 
-		viewHolder.textViewDate.setText(sms.getDate().get(Calendar.HOUR) + ":" + sms.getDate().get(Calendar.MINUTE));
+		viewHolder.textViewDate.setText(sms.getDateFormated());
 		viewHolder.textViewContent.setText(sms.getContent());
 
 		return v;

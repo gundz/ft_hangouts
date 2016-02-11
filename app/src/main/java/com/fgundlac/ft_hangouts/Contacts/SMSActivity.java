@@ -1,17 +1,11 @@
 package com.fgundlac.ft_hangouts.Contacts;
 
-import android.content.Intent;
-import android.media.Image;
-import android.os.PersistableBundle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
-import android.telephony.SmsMessage;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.fgundlac.ft_hangouts.BaseClass;
 import com.fgundlac.ft_hangouts.R;
@@ -30,6 +24,7 @@ public class SMSActivity extends BaseClass
 
 	ContactsDataSource      contactDatabase;
 	Contact                 contact;
+	SMSDataSource           smsDatabase;
 
 	private void initViews()
 	{
@@ -55,8 +50,12 @@ public class SMSActivity extends BaseClass
 		contact = contactDatabase.getContact(Long.valueOf(id));
 		contactDatabase.close();
 
-		smsList.add(new SMS("0651358408", "sms de ouf !", SMS.Type.RECEIVED, Calendar.getInstance()));
-		smsList.add(new SMS("0651358408", "sms de ouf !", SMS.Type.SENDED, Calendar.getInstance()));
+		smsDatabase = new SMSDataSource(this);
+
+		smsDatabase.open();
+		smsList = smsDatabase.getSMSFromContact(contact);
+		smsDatabase.close();
+
 		smsListAdapter = new SMSListAdapter(this, smsList);
 		listView.setAdapter(smsListAdapter);
 	}
@@ -71,9 +70,14 @@ public class SMSActivity extends BaseClass
 			String          number = contact.getNumber();
 			String          content = SMSContentEditText.getText().toString();
 
-			Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_SHORT).show();
 			if (content.length() > 0 && content.length() < 160)
 				manager.sendTextMessage(number, null, content, null, null);
+
+			smsDatabase.open();
+			SMS sms = smsDatabase.insert(new SMS(number, content, SMS.Type.SENDED, Calendar.getInstance()));
+			smsDatabase.close();
+			smsList.add(sms);
+			smsListAdapter.notifyDataSetChanged();
 		}
 	};
 }
