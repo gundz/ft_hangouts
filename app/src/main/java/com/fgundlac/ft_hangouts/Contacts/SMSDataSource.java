@@ -71,19 +71,18 @@ public class SMSDataSource
 			SMS sms = cursorToSMS(cursor);
 
 			String a, b;
-			if (Build.VERSION.SDK_INT >= 19)
+			if (Build.VERSION.SDK_INT >= 21)
 			{
 				a = PhoneNumberUtils.formatNumberToE164(sms.getNumber(), Locale.getDefault().getCountry());
 				b = PhoneNumberUtils.formatNumberToE164(contact.getNumber(), Locale.getDefault().getCountry());
+				if (PhoneNumberUtils.compare(a, b))
+					smsList.add(sms);
 			}
 			else
 			{
-				a = sms.getNumber();
-				b = contact.getNumber();
+				if (sms.compareNumber(sms.getNumber(), contact.getNumber(), 9))
+					smsList.add(sms);
 			}
-
-			if (PhoneNumberUtils.compare(a, b))
-				smsList.add(sms);
 			cursor.moveToNext();
 		}
 		cursor.close();

@@ -46,7 +46,6 @@ public class SMS
 
 	public SMS()
 	{
-
 	}
 
 	public SMS(String number, String content, Type type, Calendar date)
@@ -57,9 +56,14 @@ public class SMS
 		this.date = date;
 	}
 
-	public String getNumber()
+	public boolean compareNumber(String a, String b, int nbr)
 	{
-		return number;
+		a = new StringBuilder(a).reverse().toString();
+		b = new StringBuilder(b).reverse().toString();
+		int i = 0;
+		while (i < a.length() && i < b.length() && a.charAt(i) == b.charAt(i))
+			i++;
+		return (i >= nbr);
 	}
 
 	public long getId()
@@ -70,6 +74,11 @@ public class SMS
 	public void setId(long id)
 	{
 		this.id = id;
+	}
+
+	public String getNumber()
+	{
+		return number;
 	}
 
 	public void setNumber(String number)
