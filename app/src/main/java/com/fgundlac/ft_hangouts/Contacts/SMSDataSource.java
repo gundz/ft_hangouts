@@ -69,20 +69,8 @@ public class SMSDataSource
 		while (!cursor.isAfterLast())
 		{
 			SMS sms = cursorToSMS(cursor);
-
-			String a, b;
-			if (Build.VERSION.SDK_INT >= 21)
-			{
-				a = PhoneNumberUtils.formatNumberToE164(sms.getNumber(), Locale.getDefault().getCountry());
-				b = PhoneNumberUtils.formatNumberToE164(contact.getNumber(), Locale.getDefault().getCountry());
-				if (PhoneNumberUtils.compare(a, b))
-					smsList.add(sms);
-			}
-			else
-			{
-				if (sms.compareNumber(sms.getNumber(), contact.getNumber(), 9))
-					smsList.add(sms);
-			}
+			if (sms.compareNumber(sms.getNumber(), contact.getNumber()))
+				smsList.add(sms);
 			cursor.moveToNext();
 		}
 		cursor.close();
