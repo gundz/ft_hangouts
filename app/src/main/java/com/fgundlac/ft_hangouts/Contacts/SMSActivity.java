@@ -23,7 +23,6 @@ public class SMSActivity extends BaseClass
 {
 	public static final String SMS_BROADCAST_ACTION = "android.provider.Telephony.SMS_RECEIVED";
 
-
 	EditText                SMSContentEditText;
 	ImageButton             SMSSendButton;
 
@@ -54,6 +53,8 @@ public class SMSActivity extends BaseClass
 		contactDatabase.open();
 		contact = contactDatabase.getContact(Long.valueOf(id));
 		contactDatabase.close();
+
+		setTitle(contact.getName());
 
 		smsDatabase = new SMSDataSource(this);
 
@@ -112,7 +113,6 @@ public class SMSActivity extends BaseClass
 					}
 					for (SmsMessage message : messages)
 					{
-
 						String strMessageFrom = message.getDisplayOriginatingAddress();
 						String strMessageBody = message.getDisplayMessageBody();
 

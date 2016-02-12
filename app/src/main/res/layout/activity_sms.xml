@@ -40,14 +40,14 @@
 				android:id="@+id/SMSEditText"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:layout_weight="10"/>
+				android:layout_weight="20"/>
 
 			<ImageButton
 				android:id="@+id/SMSSend"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:src="@drawable/ic_send"
-				android:layout_weight="90"
+				android:layout_weight="80"
 				android:background="#ffffff"/>
 		</LinearLayout>
 	</RelativeLayout>
