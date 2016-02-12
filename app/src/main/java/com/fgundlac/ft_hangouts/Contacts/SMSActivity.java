@@ -142,6 +142,10 @@ public class SMSActivity extends BaseClass
 
 			if (content.length() > 0 && content.length() < 160)
 				manager.sendTextMessage(number, null, content, null, null);
+			else
+				return ;
+
+			SMSContentEditText.setText("");
 
 			smsDatabase.open();
 			SMS sms = smsDatabase.insert(new SMS(number, content, SMS.Type.SENDED, Calendar.getInstance()));
