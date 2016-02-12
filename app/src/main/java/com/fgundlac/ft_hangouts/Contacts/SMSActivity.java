@@ -78,6 +78,7 @@ public class SMSActivity extends BaseClass
 		smsList = getSMSList();
 		smsListAdapter = new SMSListAdapter(this, smsList);
 		listView.setAdapter(smsListAdapter);
+		listView.setSelection(smsListAdapter.getCount() - 1);
 	}
 
 	public ArrayList<SMS> getSMSList()
@@ -122,6 +123,7 @@ public class SMSActivity extends BaseClass
 
 						smsList.add(sms);
 						smsListAdapter.notifyDataSetChanged();
+						listView.setSelection(smsListAdapter.getCount() - 1);
 					}
 				}
 			}
@@ -146,6 +148,7 @@ public class SMSActivity extends BaseClass
 			smsDatabase.close();
 			smsList.add(sms);
 			smsListAdapter.notifyDataSetChanged();
+			listView.setSelection(smsListAdapter.getCount() - 1);
 		}
 	};
 }
