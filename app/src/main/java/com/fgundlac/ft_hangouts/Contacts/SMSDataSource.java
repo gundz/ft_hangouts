@@ -69,7 +69,7 @@ public class SMSDataSource
 		while (!cursor.isAfterLast())
 		{
 			SMS sms = cursorToSMS(cursor);
-			if (sms.compareNumber(sms.getNumber(), contact.getNumber()))
+			if (Contact.compareNumber(sms.getNumber(), contact.getNumber()))
 				smsList.add(sms);
 			cursor.moveToNext();
 		}

@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -54,7 +55,7 @@ public class SMSActivity extends BaseClass
 		contact = contactDatabase.getContact(Long.valueOf(id));
 		contactDatabase.close();
 
-		setTitle(contact.getName());
+		setTitle(contact.getFullName());
 
 		smsDatabase = new SMSDataSource(this);
 
@@ -120,10 +121,21 @@ public class SMSActivity extends BaseClass
 						smsDatabase.open();
 						SMS sms = smsDatabase.insert(new SMS(strMessageFrom, strMessageBody, SMS.Type.RECEIVED, Calendar.getInstance()));
 						smsDatabase.close();
-
 						smsList.add(sms);
 						smsListAdapter.notifyDataSetChanged();
 						listView.setSelection(smsListAdapter.getCount() - 1);
+
+						Log.d("mjopjpojpoj", "foejfpoj");
+						ContactsDataSource c = new ContactsDataSource(context);
+						if (c.checkIfNumberExits(sms.getNumber()) == false)
+						{
+							Log.d("AAAAAAAAA", "3333333");
+							contactDatabase.open();
+							contactDatabase.insert(new Contact(sms.getNumber(), sms.getNumber()));
+							contactDatabase.close();
+						}
+						else
+							Log.d("BBBBBBB", "foejfpoj");
 					}
 				}
 			}

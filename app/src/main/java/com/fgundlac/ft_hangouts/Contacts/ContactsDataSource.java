@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.util.Log;
 
 import com.fgundlac.ft_hangouts.MySQLiteHelper;
 
@@ -74,6 +75,21 @@ public class ContactsDataSource
 			return null;
 		return cursorToContact(cursor);
 	}
+
+	public boolean checkIfNumberExits(String number)
+	{
+        ArrayList<Contact>          contactList = new ArrayList<Contact>();
+
+        this.open();
+        contactList = this.getAllContacts();
+        this.close();
+        for (int i = 0; i < contactList.size(); i++)
+        {
+            if (Contact.compareNumber(number, contactList.get(i).getNumber()))
+                return true;
+        }
+        return false;
+    }
 
 	public ArrayList<Contact> getAllContacts()
 	{
