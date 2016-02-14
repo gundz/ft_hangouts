@@ -107,14 +107,6 @@ public class SMSActivity extends BaseClass
 				smsList.add((SMS)intent.getParcelableExtra("com.fgundlac.ft_hangouts.sms.received.sms"));
 				smsListAdapter.notifyDataSetChanged();
 				listViewMoveToLast();
-				/*
-				ContactsDataSource c = new ContactsDataSource(context);
-				if (c.checkIfNumberExits(sms.getNumber()) == false)
-				{
-					contactDatabase.open();
-					contactDatabase.insert(new Contact(sms.getNumber(), sms.getNumber()));
-					contactDatabase.close();
-				}*/
 			}
 		}
 	};
