@@ -4,16 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
-import android.telephony.SmsMessage;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.fgundlac.ft_hangouts.BaseClass;
 import com.fgundlac.ft_hangouts.R;
@@ -82,6 +78,13 @@ public class SMSActivity extends BaseClass
 		listViewMoveToLast();
 	}
 
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		unregisterReceiver(receiveSMSBroadcast);
+	}
+
 	public ArrayList<SMS> getSMSList()
 	{
 		ArrayList<SMS>      smsList;
@@ -104,9 +107,13 @@ public class SMSActivity extends BaseClass
 		{
 			if (intent.getAction().equals("com.fgundlac.ft_hangouts.sms.received"))
 			{
-				smsList.add((SMS)intent.getParcelableExtra("com.fgundlac.ft_hangouts.sms.received.sms"));
-				smsListAdapter.notifyDataSetChanged();
-				listViewMoveToLast();
+				SMS sms = intent.getParcelableExtra("com.fgundlac.ft_hangouts.sms.received.sms");
+				if (sms != null)
+				{
+					smsList.add(sms);
+					smsListAdapter.notifyDataSetChanged();
+					listViewMoveToLast();
+				}
 			}
 		}
 	};

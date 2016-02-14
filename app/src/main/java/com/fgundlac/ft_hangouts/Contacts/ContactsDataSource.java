@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.util.Log;
 
 import com.fgundlac.ft_hangouts.MySQLiteHelper;
 
@@ -67,8 +66,7 @@ public class ContactsDataSource
 
 	public Contact getContact(long id)
 	{
-		Contact                     contact = new Contact();
-		Cursor                      cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.CONTACT_TABLE + " WHERE _id = ?", new String[]{String.valueOf(id)});
+		Cursor cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.CONTACT_TABLE + " WHERE _id = ?", new String[]{String.valueOf(id)});
 
 		cursor.moveToFirst();
 		if (cursor.getCount() == 0)
@@ -78,7 +76,7 @@ public class ContactsDataSource
 
 	public boolean checkIfNumberExits(String number)
 	{
-        ArrayList<Contact>          contactList = new ArrayList<Contact>();
+        ArrayList<Contact>          contactList;
 
         this.open();
         contactList = this.getAllContacts();
@@ -93,7 +91,7 @@ public class ContactsDataSource
 
 	public ArrayList<Contact> getAllContacts()
 	{
-		ArrayList<Contact>          contacts = new ArrayList<Contact>();
+		ArrayList<Contact>          contacts = new ArrayList<>();
 		Cursor                      cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.CONTACT_TABLE, null);
 
 		cursor.moveToFirst();
@@ -117,7 +115,7 @@ public class ContactsDataSource
 		contact.setLastName(cursor.getString(i++));
 		contact.setNickname(cursor.getString(i++));
 		contact.setNumber(cursor.getString(i++));
-		contact.setEmail(cursor.getString(i++));
+		contact.setEmail(cursor.getString(i));
 		return contact;
 	}
 }

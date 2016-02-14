@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -45,6 +44,19 @@ public class SMSBroadcastReceiver extends BroadcastReceiver
 					Intent i = new Intent("com.fgundlac.ft_hangouts.sms.received");
 					i.putExtra("com.fgundlac.ft_hangouts.sms.received.sms", sms);
 					context.sendBroadcast(i);
+
+
+					ContactsDataSource contactsDataSource = new ContactsDataSource(context);
+					if (!contactsDataSource.checkIfNumberExits(sms.getNumber()))
+					{
+						contactsDataSource.open();
+						Contact c = contactsDataSource.insert(new Contact(sms.getNumber(), sms.getNumber()));
+						contactsDataSource.close();
+						i = new Intent("com.fgundlac.ft_hangouts.contact.added");
+						i.putExtra("com.fgundlac.ft_hangouts.contact.added.contact", c);
+						context.sendBroadcast(i);
+
+					}
 				}
 			}
 		}

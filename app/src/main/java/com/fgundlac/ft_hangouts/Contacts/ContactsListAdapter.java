@@ -80,9 +80,8 @@ public class ContactsListAdapter extends BaseAdapter
 		{
 			viewHolder = (ContactListViewHolder) v.getTag();
 		}
-
 		contact = contactList.get(position);
-		viewHolder.textViewName.setText(contact.getName() + " " + contact.getLastName());
+		viewHolder.textViewName.setText(contact.getFullName());
 		viewHolder.textViewNickname.setText(contact.getNickname());
 		viewHolder.textViewNumber.setText(contact.getNumber());
 

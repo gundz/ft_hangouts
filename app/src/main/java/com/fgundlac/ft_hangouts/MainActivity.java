@@ -1,6 +1,9 @@
 package com.fgundlac.ft_hangouts;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.Menu;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends BaseClass
 {
+	ContactsDataSource          database;
 	ArrayList<Contact>          contactList = new ArrayList<Contact>();
 	ContactsListAdapter         contactListAdapter;
 	ListView                    listView;
@@ -38,6 +42,7 @@ public class MainActivity extends BaseClass
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initViews();
+		database = new ContactsDataSource(this);
 	}
 
 	@Override
@@ -45,16 +50,24 @@ public class MainActivity extends BaseClass
 	{
 		super.onResume();
 
-		ContactsDataSource              db = new ContactsDataSource(this);
+		IntentFilter intFilt = new IntentFilter("com.fgundlac.ft_hangouts.contact.added");
+		registerReceiver(addContactBroadcast, intFilt);
 
-		db.open();
-		contactList = db.getAllContacts();
-		db.close();
+		database.open();
+		contactList = database.getAllContacts();
+		database.close();
 
 		contactListAdapter = new ContactsListAdapter(this, contactList);
 		listView.setAdapter(contactListAdapter);
 		listView.setOnItemClickListener(contactClickListener);
 		contactListAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		unregisterReceiver(addContactBroadcast);
 	}
 
 	public AdapterView.OnItemClickListener contactClickListener = new AdapterView.OnItemClickListener()
@@ -104,4 +117,21 @@ public class MainActivity extends BaseClass
 		Intent intent = new Intent(this, PreferenceActivity.class);
 		startActivity(intent);
 	}
+
+	public BroadcastReceiver addContactBroadcast = new BroadcastReceiver()
+	{
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			if (intent.getAction().equals("com.fgundlac.ft_hangouts.contact.added"))
+			{
+				Contact c = intent.getParcelableExtra("com.fgundlac.ft_hangouts.contact.added.contact");
+				if (c != null)
+				{
+					contactList.add(c);
+					contactListAdapter.notifyDataSetChanged();
+				}
+			}
+		}
+	};
 }

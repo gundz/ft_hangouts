@@ -1,9 +1,7 @@
 package com.fgundlac.ft_hangouts.Contacts;
 
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.telephony.PhoneNumberUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -147,16 +147,15 @@ public class Contact implements Parcelable
 		{
 			return new Contact[size];
 		}
-
 	};
 
-	public Contact(Parcel in)
+	public Contact (Parcel in)
 	{
-		id = in.readInt();
-		name = in.readString();
-		lastName = in.readString();
-		nickname = in.readString();
-		number = in.readString();
-		email = in.readString();
+		this.id = in.readInt();
+		this.name = in.readString();
+		this.lastName = in.readString();
+		this.nickname = in.readString();
+		this.number = in.readString();
+		this.email = in.readString();
 	}
 }

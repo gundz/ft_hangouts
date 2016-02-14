@@ -5,13 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.os.Build;
-import android.telephony.PhoneNumberUtils;
 
 import com.fgundlac.ft_hangouts.MySQLiteHelper;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * Created by flogu on 11/02/2016.
@@ -51,8 +48,7 @@ public class SMSDataSource
 
 	public SMS getSMS(long id)
 	{
-		SMS                         sms = new SMS();
-		Cursor                      cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.SMS_TABLE + " WHERE _id = ?", new String[]{String.valueOf(id)});
+		Cursor cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.SMS_TABLE + " WHERE _id = ?", new String[]{String.valueOf(id)});
 
 		cursor.moveToFirst();
 		if (cursor.getCount() == 0)
@@ -62,7 +58,7 @@ public class SMSDataSource
 
 	public ArrayList<SMS> getSMSFromContact(Contact contact)
 	{
-		ArrayList<SMS>              smsList = new ArrayList<SMS>();
+		ArrayList<SMS>              smsList = new ArrayList<>();
 		Cursor                      cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.SMS_TABLE, null);
 
 		cursor.moveToFirst();
@@ -86,7 +82,7 @@ public class SMSDataSource
 		sms.setNumber(cursor.getString(i++));
 		sms.setContent(cursor.getString(i++));
 		sms.setType(SMS.Type.fromInt(cursor.getInt(i++)));
-		sms.setDateFormated(cursor.getString(i++));
+		sms.setDateFormated(cursor.getString(i));
 		return sms;
 	}
 }
