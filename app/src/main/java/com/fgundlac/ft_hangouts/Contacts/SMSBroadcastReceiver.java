@@ -43,7 +43,7 @@ public class SMSBroadcastReceiver extends BroadcastReceiver
 					smsDatabase.close();
 
 					Intent i = new Intent("com.fgundlac.ft_hangouts.sms.received");
-					//i.putExtra("com.fgundlac.ft_hangouts.sms.received.sms", sms);
+					i.putExtra("com.fgundlac.ft_hangouts.sms.received.sms", sms);
 					context.sendBroadcast(i);
 				}
 			}

@@ -79,7 +79,7 @@ public class SMSActivity extends BaseClass
 		smsList = getSMSList();
 		smsListAdapter = new SMSListAdapter(this, smsList);
 		listView.setAdapter(smsListAdapter);
-		listView.setSelection(smsListAdapter.getCount() - 1);
+		listViewMoveToLast();
 	}
 
 	public ArrayList<SMS> getSMSList()
@@ -92,6 +92,11 @@ public class SMSActivity extends BaseClass
 		return smsList;
 	}
 
+	public void listViewMoveToLast()
+	{
+		listView.setSelection(smsListAdapter.getCount() - 1);
+	}
+
 	public BroadcastReceiver receiveSMSBroadcast = new BroadcastReceiver()
 	{
 		@Override
@@ -99,17 +104,9 @@ public class SMSActivity extends BaseClass
 		{
 			if (intent.getAction().equals("com.fgundlac.ft_hangouts.sms.received"))
 			{
-				//smsList.add(sms);
-
-				smsDatabase.open();
-				smsList = smsDatabase.getSMSFromContact(contact);
-				smsDatabase.close();
-				smsListAdapter = new SMSListAdapter(SMSActivity.this, smsList);
-				listView.setAdapter(smsListAdapter);
+				smsList.add((SMS)intent.getParcelableExtra("com.fgundlac.ft_hangouts.sms.received.sms"));
 				smsListAdapter.notifyDataSetChanged();
-
-				smsListAdapter.notifyDataSetChanged();
-				listView.setSelection(smsListAdapter.getCount() - 1);
+				listViewMoveToLast();
 				/*
 				ContactsDataSource c = new ContactsDataSource(context);
 				if (c.checkIfNumberExits(sms.getNumber()) == false)
@@ -144,7 +141,7 @@ public class SMSActivity extends BaseClass
 			smsDatabase.close();
 			smsList.add(sms);
 			smsListAdapter.notifyDataSetChanged();
-			listView.setSelection(smsListAdapter.getCount() - 1);
+			listViewMoveToLast();
 		}
 	};
 }
