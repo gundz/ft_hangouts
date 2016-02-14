@@ -1,6 +1,8 @@
 package com.fgundlac.ft_hangouts.Contacts;
 
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.telephony.PhoneNumberUtils;
 
 import java.util.Locale;
@@ -8,17 +10,16 @@ import java.util.Locale;
 /**
  * Created by flogu on 04/02/2016.
  */
-public class Contact
+public class Contact implements Parcelable
 {
 	protected static final int NUMBER_COMP = 9;
 
 	protected long      id;
-	protected String    name;
-	protected String    lastName;
-	protected String	fullName;
-	protected String    nickname;
-	protected String    number;
-	protected String    email;
+	protected String    name = "";
+	protected String    lastName = "";
+	protected String    nickname = "";
+	protected String    number = "";
+	protected String    email = "";
 
 	public Contact()
 	{
@@ -93,12 +94,7 @@ public class Contact
 
 	public String getFullName()
 	{
-		return fullName;
-	}
-
-	public void setFullName(String fullName)
-	{
-		this.fullName = getName() + " " + getLastName();
+		return name + " " + lastName;
 	}
 
 	public String getNumber()
@@ -119,5 +115,48 @@ public class Contact
 	public void setEmail(String email)
 	{
 		this.email = email;
+	}
+
+	@Override
+	public int describeContents()
+	{
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags)
+	{
+		dest.writeInt((int)id);
+		dest.writeString(name);
+		dest.writeString(lastName);
+		dest.writeString(nickname);
+		dest.writeString(number);
+		dest.writeString(email);
+	}
+
+	public static final Parcelable.Creator<Contact> CREATOR = new Parcelable.Creator<Contact>()
+	{
+		@Override
+		public Contact createFromParcel(Parcel source)
+		{
+			return new Contact(source);
+		}
+
+		@Override
+		public Contact[] newArray(int size)
+		{
+			return new Contact[size];
+		}
+
+	};
+
+	public Contact(Parcel in)
+	{
+		id = in.readInt();
+		name = in.readString();
+		lastName = in.readString();
+		nickname = in.readString();
+		number = in.readString();
+		email = in.readString();
 	}
 }
