@@ -15,45 +15,6 @@ import java.util.Locale;
  */
 public class SMS implements Parcelable
 {
-
-	@Override
-	public int describeContents()
-	{
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags)
-	{
-		dest.writeString(number);
-		dest.writeString(content);
-		dest.writeInt(type.getValue());
-		dest.writeString(getDateFormated());
-	}
-
-	public static final Parcelable.Creator<SMS> CREATOR = new Parcelable.Creator<SMS>()
-	{
-		@Override
-		public SMS createFromParcel(Parcel source)
-		{
-			return new SMS(source);
-		}
-
-		@Override
-		public SMS[] newArray(int size)
-		{
-			return new SMS[size];
-		}
-	};
-
-	public SMS (Parcel in)
-	{
-		this.number = in.readString();
-		this.content = in.readString();
-		this.type = Type.fromInt(in.readInt());
-		setDateFormated(in.readString());
-	}
-
 	public enum Type
 	{
 		RECEIVED(0), SENDED(1);
@@ -168,5 +129,43 @@ public class SMS implements Parcelable
 	public void setDate(Calendar date)
 	{
 		this.date = date;
+	}
+
+	@Override
+	public int describeContents()
+	{
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags)
+	{
+		dest.writeString(number);
+		dest.writeString(content);
+		dest.writeInt(type.getValue());
+		dest.writeString(getDateFormated());
+	}
+
+	public static final Parcelable.Creator<SMS> CREATOR = new Parcelable.Creator<SMS>()
+	{
+		@Override
+		public SMS createFromParcel(Parcel source)
+		{
+			return new SMS(source);
+		}
+
+		@Override
+		public SMS[] newArray(int size)
+		{
+			return new SMS[size];
+		}
+	};
+
+	public SMS (Parcel in)
+	{
+		this.number = in.readString();
+		this.content = in.readString();
+		this.type = Type.fromInt(in.readInt());
+		setDateFormated(in.readString());
 	}
 }
