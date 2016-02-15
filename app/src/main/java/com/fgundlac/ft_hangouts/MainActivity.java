@@ -2,10 +2,13 @@ package com.fgundlac.ft_hangouts;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,15 +26,15 @@ import java.util.ArrayList;
 
 public class MainActivity extends BaseClass
 {
-	ContactsDataSource          database;
-	ArrayList<Contact>          contactList = new ArrayList<Contact>();
-	ContactsListAdapter         contactListAdapter;
-	ListView                    listView;
-	FloatingActionButton        addContactButton;
+	ContactsDataSource database;
+	ArrayList<Contact> contactList = new ArrayList<Contact>();
+	ContactsListAdapter contactListAdapter;
+	ListView contactListView;
+	FloatingActionButton addContactButton;
 
 	private void initViews()
 	{
-		listView = (ListView) findViewById(R.id.contactListView);
+		contactListView = (ListView) findViewById(R.id.contactListView);
 		addContactButton = (FloatingActionButton) findViewById(R.id.addContactButton);
 		addContactButton.setOnClickListener(addContactListener);
 	}
@@ -58,8 +61,9 @@ public class MainActivity extends BaseClass
 		database.close();
 
 		contactListAdapter = new ContactsListAdapter(this, contactList);
-		listView.setAdapter(contactListAdapter);
-		listView.setOnItemClickListener(contactClickListener);
+		contactListView.setAdapter(contactListAdapter);
+		contactListView.setOnItemClickListener(contactClickListener);
+		registerForContextMenu(contactListView);
 		contactListAdapter.notifyDataSetChanged();
 	}
 
@@ -76,7 +80,7 @@ public class MainActivity extends BaseClass
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 		{
 			Intent intent = new Intent(MainActivity.this, ShowContactActivity.class);
-			intent.putExtra("com.fgundlac.ft_hangouts.contact.show", (int)contactList.get(position).getId());
+			intent.putExtra("com.fgundlac.ft_hangouts.contact.show", (int) contactList.get(position).getId());
 			startActivity(intent);
 		}
 	};
@@ -134,4 +138,59 @@ public class MainActivity extends BaseClass
 			}
 		}
 	};
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+	{
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.setHeaderTitle("Select The Action");
+		menu.add(0, v.getId(), 0, "Edit");//groupId, itemId, order, title
+		menu.add(0, v.getId(), 0, "Delete");
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item)
+	{
+		AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		final Contact c = contactList.get((int) menuInfo.id);
+
+		if(item.getTitle() == "Edit")
+		{
+			Intent intent = new Intent(this, AddEditContactActivity.class);
+			intent.putExtra("com.fgundlac.ft_hangouts.contact.edit", (int) c.getId());
+			startActivity(intent);
+		}
+		else if(item.getTitle() == "Delete")
+		{
+			new AlertDialog.Builder(getApplicationContext())
+					.setTitle(getResources().getString(R.string.contact_delete_entry))
+					.setMessage(getResources().getString(R.string.contact_delete_warning))
+					.setPositiveButton(getResources().getString(R.string.delete), new DialogInterface.OnClickListener()
+					{
+						@Override
+						public void onClick(DialogInterface dialog, int which)
+						{
+							database.open();
+							database.deleteContact(c);
+							database.close();
+							finish();
+						}
+					})
+					.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener()
+					{
+						@Override
+						public void onClick(DialogInterface dialog, int which)
+						{
+
+						}
+					})
+					.setIcon(R.drawable.ic_action_warning)
+					.show();
+		}
+		else
+		{
+			return false;
+		}
+		return true;
+	}
 }
