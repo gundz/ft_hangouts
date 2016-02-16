@@ -2,11 +2,17 @@ package com.fgundlac.ft_hangouts.Contacts;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.telephony.SmsManager;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -24,7 +30,7 @@ public class SMSActivity extends BaseClass
 
 	ArrayList<SMS>          smsList;
 	SMSListAdapter          smsListAdapter;
-	ListView                listView;
+	ListView                smsListView;
 
 	ContactsDataSource      contactDatabase;
 	Contact                 contact;
@@ -36,7 +42,7 @@ public class SMSActivity extends BaseClass
 		SMSSendButton = (ImageButton) findViewById(R.id.SMSSend);
 		SMSSendButton.setOnClickListener(sendSMSOnClickListener);
 
-		listView = (ListView) findViewById(R.id.smsListView);
+		smsListView = (ListView) findViewById(R.id.smsListView);
 	}
 
 	private void init()
@@ -47,7 +53,7 @@ public class SMSActivity extends BaseClass
 
 		contactDatabase = new ContactsDataSource(this);
 		contactDatabase.open();
-		contact = contactDatabase.getContact(Long.valueOf(id));
+		contact = contactDatabase.getContact((long) id);
 		contactDatabase.close();
 
 		setTitle(contact.getFullName());
@@ -74,7 +80,8 @@ public class SMSActivity extends BaseClass
 
 		smsList = getSMSList();
 		smsListAdapter = new SMSListAdapter(this, smsList);
-		listView.setAdapter(smsListAdapter);
+		smsListView.setAdapter(smsListAdapter);
+		registerForContextMenu(smsListView);
 		listViewMoveToLast();
 	}
 
@@ -97,7 +104,7 @@ public class SMSActivity extends BaseClass
 
 	public void listViewMoveToLast()
 	{
-		listView.setSelection(smsListAdapter.getCount() - 1);
+		smsListView.setSelection(smsListAdapter.getCount() - 1);
 	}
 
 	public BroadcastReceiver receiveSMSBroadcast = new BroadcastReceiver()
@@ -143,4 +150,53 @@ public class SMSActivity extends BaseClass
 			listViewMoveToLast();
 		}
 	};
+
+	public static final int MENU_DELETE = 1;
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+	{
+		super.onCreateContextMenu(menu, v, menuInfo);
+
+		menu.setHeaderTitle(getResources().getString(R.string.choose_action));
+		menu.add(Menu.NONE, MENU_DELETE, 0, getResources().getString(R.string.delete));
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item)
+	{
+		final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		final SMS sms = smsList.get((int) menuInfo.id);
+
+		if(item.getItemId() == MENU_DELETE)
+		{
+			new AlertDialog.Builder(SMSActivity.this)
+					.setTitle(getResources().getString(R.string.contact_delete_entry))
+					.setMessage(getResources().getString(R.string.contact_delete_warning))
+					.setPositiveButton(getResources().getString(R.string.delete), new DialogInterface.OnClickListener()
+					{
+						@Override
+						public void onClick(DialogInterface dialog, int which)
+						{
+							sms.deleteOnBDD(getApplicationContext());
+							smsList.remove((int) menuInfo.id);
+							smsListAdapter.notifyDataSetChanged();
+						}
+					})
+					.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener()
+					{
+						@Override
+						public void onClick(DialogInterface dialog, int which)
+						{
+						}
+					})
+					.setIcon(R.drawable.ic_action_warning)
+					.show();
+		}
+		else
+		{
+			return false;
+		}
+		return true;
+	}
 }

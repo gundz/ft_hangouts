@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class MainActivity extends BaseClass
 {
 	ContactsDataSource database;
-	ArrayList<Contact> contactList = new ArrayList<Contact>();
+	ArrayList<Contact> contactList = new ArrayList<>();
 	ContactsListAdapter contactListAdapter;
 	ListView contactListView;
 	FloatingActionButton addContactButton;
@@ -139,14 +139,17 @@ public class MainActivity extends BaseClass
 		}
 	};
 
+	public static final int MENU_EDIT = 1;
+	public static final int MENU_DELETE = 2;
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
 	{
 		super.onCreateContextMenu(menu, v, menuInfo);
 
-		menu.setHeaderTitle("Select The Action");
-		menu.add(Menu.NONE, v.getId(), 0, "Edit");
-		menu.add(Menu.NONE, v.getId(), 0, "Delete");
+		menu.setHeaderTitle(getResources().getString(R.string.choose_action));
+		menu.add(Menu.NONE, MENU_EDIT, 0, getResources().getString(R.string.edit));
+		menu.add(Menu.NONE, MENU_DELETE, 0, getResources().getString(R.string.delete));
 	}
 
 	@Override
@@ -155,13 +158,13 @@ public class MainActivity extends BaseClass
 		final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		final Contact c = contactList.get((int) menuInfo.id);
 
-		if (item.getTitle() == "Edit")
+		if (item.getItemId() == MENU_EDIT)
 		{
 			Intent intent = new Intent(this, AddEditContactActivity.class);
 			intent.putExtra("com.fgundlac.ft_hangouts.contact.edit", (int) c.getId());
 			startActivity(intent);
 		}
-		else if(item.getTitle() == "Delete")
+		else if(item.getItemId() == MENU_DELETE)
 		{
 			new AlertDialog.Builder(MainActivity.this)
 					.setTitle(getResources().getString(R.string.contact_delete_entry))
@@ -171,10 +174,9 @@ public class MainActivity extends BaseClass
 						@Override
 						public void onClick(DialogInterface dialog, int which)
 						{
-							database.open();
-							database.deleteContact(c);
-							database.close();
-							contactList.remove(menuInfo.id);
+							c.deleteOnBDD(MainActivity.this);
+							contactList.remove((int) menuInfo.id);
+							contactListAdapter.notifyDataSetChanged();
 						}
 					})
 					.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener()
@@ -182,7 +184,6 @@ public class MainActivity extends BaseClass
 						@Override
 						public void onClick(DialogInterface dialog, int which)
 						{
-
 						}
 					})
 					.setIcon(R.drawable.ic_action_warning)

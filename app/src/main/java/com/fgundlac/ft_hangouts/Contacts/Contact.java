@@ -1,5 +1,6 @@
 package com.fgundlac.ft_hangouts.Contacts;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,9 +8,6 @@ import android.telephony.PhoneNumberUtils;
 
 import java.util.Locale;
 
-/**
- * Created by flogu on 04/02/2016.
- */
 public class Contact implements Parcelable
 {
 	protected static final int NUMBER_COMP = 9;
@@ -50,6 +48,51 @@ public class Contact implements Parcelable
 			return (i >= NUMBER_COMP);
 		}
 		return false;
+	}
+
+	public void deleteOnBDD(Context context)
+	{
+		ContactsDataSource contactDatabase = new ContactsDataSource(context);
+
+		contactDatabase.open();
+		contactDatabase.deleteContact(this);
+		contactDatabase.close();
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags)
+	{
+		dest.writeInt((int)id);
+		dest.writeString(name);
+		dest.writeString(lastName);
+		dest.writeString(nickname);
+		dest.writeString(number);
+		dest.writeString(email);
+	}
+
+	public static final Parcelable.Creator<Contact> CREATOR = new Parcelable.Creator<Contact>()
+	{
+		@Override
+		public Contact createFromParcel(Parcel source)
+		{
+			return new Contact(source);
+		}
+
+		@Override
+		public Contact[] newArray(int size)
+		{
+			return new Contact[size];
+		}
+	};
+
+	public Contact (Parcel in)
+	{
+		this.id = in.readInt();
+		this.name = in.readString();
+		this.lastName = in.readString();
+		this.nickname = in.readString();
+		this.number = in.readString();
+		this.email = in.readString();
 	}
 
 	public long getId()
@@ -121,41 +164,5 @@ public class Contact implements Parcelable
 	public int describeContents()
 	{
 		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags)
-	{
-		dest.writeInt((int)id);
-		dest.writeString(name);
-		dest.writeString(lastName);
-		dest.writeString(nickname);
-		dest.writeString(number);
-		dest.writeString(email);
-	}
-
-	public static final Parcelable.Creator<Contact> CREATOR = new Parcelable.Creator<Contact>()
-	{
-		@Override
-		public Contact createFromParcel(Parcel source)
-		{
-			return new Contact(source);
-		}
-
-		@Override
-		public Contact[] newArray(int size)
-		{
-			return new Contact[size];
-		}
-	};
-
-	public Contact (Parcel in)
-	{
-		this.id = in.readInt();
-		this.name = in.readString();
-		this.lastName = in.readString();
-		this.nickname = in.readString();
-		this.number = in.readString();
-		this.email = in.readString();
 	}
 }

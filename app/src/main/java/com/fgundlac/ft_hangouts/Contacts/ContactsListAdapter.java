@@ -13,9 +13,6 @@ import com.fgundlac.ft_hangouts.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by flogu on 05/02/2016.
- */
 public class ContactsListAdapter extends BaseAdapter
 {
 	private Activity            context;
@@ -70,9 +67,7 @@ public class ContactsListAdapter extends BaseAdapter
 
 		if (convertView == null)
 		{
-			LayoutInflater      li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-			v = li.inflate(R.layout.contact_list_item, null);
+			v = layoutInflater.inflate(R.layout.contact_list_item, null);
 			viewHolder = new ContactListViewHolder(v);
 			v.setTag(viewHolder);
 		}

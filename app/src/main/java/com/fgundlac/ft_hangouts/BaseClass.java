@@ -7,9 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
-/**
- * Created by flogu on 04/02/2016.
- */
 public class BaseClass extends AppCompatActivity
 {
 

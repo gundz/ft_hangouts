@@ -1,5 +1,6 @@
 package com.fgundlac.ft_hangouts.Contacts;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,9 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-/**
- * Created by flogu on 11/02/2016.
- */
 public class SMS implements Parcelable
 {
 	public enum Type
@@ -56,6 +54,15 @@ public class SMS implements Parcelable
 		this.content = content;
 		this.type = type;
 		this.date = date;
+	}
+
+	public void deleteOnBDD(Context context)
+	{
+		SMSDataSource smsDatabase = new SMSDataSource(context);
+
+		smsDatabase.open();
+		smsDatabase.deleteSMS(this);
+		smsDatabase.close();
 	}
 
 	public long getId()

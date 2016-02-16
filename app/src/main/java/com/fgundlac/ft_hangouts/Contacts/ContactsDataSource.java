@@ -10,9 +10,6 @@ import com.fgundlac.ft_hangouts.MySQLiteHelper;
 
 import java.util.ArrayList;
 
-/**
- * Created by flogu on 08/02/2016.
- */
 public class ContactsDataSource
 {
 	private SQLiteDatabase          database;

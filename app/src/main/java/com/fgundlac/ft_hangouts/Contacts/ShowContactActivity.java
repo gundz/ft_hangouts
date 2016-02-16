@@ -84,7 +84,7 @@ public class ShowContactActivity extends BaseClass
 		super.onResume();
 
 		database.open();
-		contact = database.getContact(Long.valueOf(id));
+		contact = database.getContact((long) id);
 		database.close();
 
 		setContactInfos(contact);
@@ -140,9 +140,7 @@ public class ShowContactActivity extends BaseClass
 					@Override
 					public void onClick(DialogInterface dialog, int which)
 					{
-						database.open();
-						database.deleteContact(contact);
-						database.close();
+						contact.deleteOnBDD(getApplicationContext());
 						finish();
 					}
 				})

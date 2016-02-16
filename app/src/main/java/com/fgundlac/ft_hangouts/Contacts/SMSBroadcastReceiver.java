@@ -9,9 +9,6 @@ import android.telephony.SmsMessage;
 
 import java.util.Calendar;
 
-/**
- * Created by FLOGU on 13/02/2016.
- */
 public class SMSBroadcastReceiver extends BroadcastReceiver
 {
 	@Override

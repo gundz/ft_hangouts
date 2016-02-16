@@ -15,9 +15,6 @@ import com.fgundlac.ft_hangouts.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by flogu on 11/02/2016.
- */
 public class SMSListAdapter extends BaseAdapter
 {
 	private Activity  context;
@@ -72,9 +69,7 @@ public class SMSListAdapter extends BaseAdapter
 
 		if (convertView == null)
 		{
-			LayoutInflater      li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-			v = li.inflate(R.layout.sms_list_item, null);
+			v = layoutInflater.inflate(R.layout.sms_list_item, null);
 			viewHolder = new SMSListViewHolder(v);
 			v.setTag(viewHolder);
 		}
@@ -84,14 +79,13 @@ public class SMSListAdapter extends BaseAdapter
 		}
 
 		sms = smsList.get(position);
-
 		if (sms.getType() == SMS.Type.RECEIVED)
 		{
-			viewHolder.SMSRelativeLayout.setGravity(Gravity.RIGHT);
+			viewHolder.SMSRelativeLayout.setGravity(Gravity.END);
 		}
 		else
 		{
-			viewHolder.SMSRelativeLayout.setGravity(Gravity.LEFT);
+			viewHolder.SMSRelativeLayout.setGravity(Gravity.START);
 		}
 
 		viewHolder.textViewDate.setText(sms.getDateFormated());

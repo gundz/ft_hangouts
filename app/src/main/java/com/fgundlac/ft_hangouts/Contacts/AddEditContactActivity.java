@@ -46,7 +46,7 @@ public class AddEditContactActivity extends BaseClass
 		if ((id = getIntent().getIntExtra("com.fgundlac.ft_hangouts.contact.edit", -1)) != -1)
 		{
 			database.open();
-			contact = database.getContact(Long.valueOf(id));
+			contact = database.getContact((long) id);
 			database.close();
 			setContactInfos(contact);
 		}

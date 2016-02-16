@@ -10,9 +10,6 @@ import com.fgundlac.ft_hangouts.MySQLiteHelper;
 
 import java.util.ArrayList;
 
-/**
- * Created by flogu on 11/02/2016.
- */
 public class SMSDataSource
 {
 	private SQLiteDatabase          database;
@@ -44,6 +41,11 @@ public class SMSDataSource
 		long id = database.insert(MySQLiteHelper.SMS_TABLE, null, value);
 
 		return getSMS(id);
+	}
+
+	public void deleteSMS(SMS sms)
+	{
+		database.delete(MySQLiteHelper.SMS_TABLE, MySQLiteHelper.SMS_KEY + " = " + sms.getId(), null);
 	}
 
 	public SMS getSMS(long id)

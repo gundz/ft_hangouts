@@ -3,9 +3,6 @@ package com.fgundlac.ft_hangouts;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
-/**
- * Created by flogu on 04/02/2016.
- */
 public class PreferenceActivity extends BaseClass
 {
 	@Override
