@@ -11,12 +11,13 @@
 			android:id="@+id/dateTextView"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"/>
-
 		<TextView
 			android:id="@+id/contentTextView"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/dateTextView"/>
+			android:layout_below="@+id/dateTextView"
+			android:textSize="17dp"
+			android:textColor="#000000"/>
 	</RelativeLayout>
 
 

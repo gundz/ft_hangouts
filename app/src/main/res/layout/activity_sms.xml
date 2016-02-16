@@ -38,7 +38,7 @@
 
 			<EditText
 				android:id="@+id/SMSEditText"
-				android:inputType="textAutoCorrect"
+				android:inputType="textMultiLine"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:layout_weight="20"/>

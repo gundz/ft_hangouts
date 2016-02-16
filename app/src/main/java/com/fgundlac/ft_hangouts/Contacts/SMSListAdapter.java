@@ -82,10 +82,12 @@ public class SMSListAdapter extends BaseAdapter
 		if (sms.getType() == SMS.Type.RECEIVED)
 		{
 			viewHolder.SMSRelativeLayout.setGravity(Gravity.END);
+			viewHolder.SMSRelativeLayout.setPadding(context.getResources().getDimensionPixelSize(R.dimen.sms_padding), 5, 5, 5);
 		}
-		else
+		else if (sms.getType() == SMS.Type.SENDED)
 		{
 			viewHolder.SMSRelativeLayout.setGravity(Gravity.START);
+			viewHolder.SMSRelativeLayout.setPadding(5, 5, context.getResources().getDimensionPixelSize(R.dimen.sms_padding), 5);
 		}
 
 		viewHolder.textViewDate.setText(sms.getDateFormated());

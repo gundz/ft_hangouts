@@ -51,15 +51,15 @@
 
 				<ImageButton
 					android:id="@+id/callButton"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_width="75dp"
+					android:layout_height="75dp"
 					android:contentDescription="@string/contact_call_contact"
 					android:src="@drawable/ic_call"/>
 
 				<ImageButton
 					android:id="@+id/smsButton"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
+					android:layout_width="75dp"
+					android:layout_height="75dp"
 					android:contentDescription="@string/contact_sms_contact"
 					android:src="@drawable/ic_sms"/>
 			</LinearLayout>
@@ -86,8 +86,8 @@
 
 			<ImageButton
 				android:id="@+id/emailButton"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_width="75dp"
+				android:layout_height="75dp"
 				android:contentDescription="@string/contact_email_contact"
 				android:src="@drawable/ic_email"/>
 		</LinearLayout>
