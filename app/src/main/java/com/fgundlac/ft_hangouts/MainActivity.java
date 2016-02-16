@@ -143,18 +143,19 @@ public class MainActivity extends BaseClass
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
 	{
 		super.onCreateContextMenu(menu, v, menuInfo);
+
 		menu.setHeaderTitle("Select The Action");
-		menu.add(0, v.getId(), 0, "Edit");//groupId, itemId, order, title
-		menu.add(0, v.getId(), 0, "Delete");
+		menu.add(Menu.NONE, v.getId(), 0, "Edit");
+		menu.add(Menu.NONE, v.getId(), 0, "Delete");
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item)
 	{
-		AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		final Contact c = contactList.get((int) menuInfo.id);
 
-		if(item.getTitle() == "Edit")
+		if (item.getTitle() == "Edit")
 		{
 			Intent intent = new Intent(this, AddEditContactActivity.class);
 			intent.putExtra("com.fgundlac.ft_hangouts.contact.edit", (int) c.getId());
@@ -162,7 +163,7 @@ public class MainActivity extends BaseClass
 		}
 		else if(item.getTitle() == "Delete")
 		{
-			new AlertDialog.Builder(getApplicationContext())
+			new AlertDialog.Builder(MainActivity.this)
 					.setTitle(getResources().getString(R.string.contact_delete_entry))
 					.setMessage(getResources().getString(R.string.contact_delete_warning))
 					.setPositiveButton(getResources().getString(R.string.delete), new DialogInterface.OnClickListener()
@@ -173,7 +174,7 @@ public class MainActivity extends BaseClass
 							database.open();
 							database.deleteContact(c);
 							database.close();
-							finish();
+							contactList.remove(menuInfo.id);
 						}
 					})
 					.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener()
