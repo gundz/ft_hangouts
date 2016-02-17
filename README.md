@@ -5,3 +5,5 @@ Bonus :
 Call Contact
 
 Email Contact
+
+Contact is created if received sms
