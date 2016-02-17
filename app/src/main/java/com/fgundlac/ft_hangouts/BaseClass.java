@@ -6,15 +6,42 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class BaseClass extends AppCompatActivity
 {
+
+	protected Calendar date = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setActionBarColor();
+	}
+
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		if (date != null)
+		{
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+			String formatedDate =  dateFormat.format(date.getTime());
+
+			Toast.makeText(getApplicationContext(), formatedDate, Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		date = Calendar.getInstance();
 	}
 
 	private void setActionBarColor()
