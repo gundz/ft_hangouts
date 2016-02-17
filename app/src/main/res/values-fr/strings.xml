@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="cancel">Annuler</string>
+	<string name="contact_add">Ajouter un contact</string>
+	<string name="contact_call_contact">Appeller</string>
+	<string name="contact_delete">Supprimer le contact</string>
+	<string name="contact_delete_entry">Supprimer entrée ?</string>
+	<string name="contact_delete_warning">Êtes-vous sur de vouloir supprimer cette entrée ?</string>
+	<string name="contact_edit">Modifier</string>
+	<string name="contact_email">E-Mail</string>
+	<string name="contact_email_contact">Envoyer un e-mail au contact</string>
+	<string name="contact_last_name">Prenom</string>
+	<string name="contact_name">Nom</string>
+	<string name="contact_nickname">Surnom</string>
+	<string name="contact_number">Numéro de téléphone</string>
+	<string name="contact_save">Sauvegarder</string>
+	<string name="contact_sms_contact">Envoyer un SMS</string>
+	<string name="delete">Supprimer</string>
+	<string name="edit">Modifier</string>
+	<string name="main_menu_settings">Paramètres</string>
+	<string name="settings_actionBarColorList_title">Choisir la couleur de la barre</string>
+	<string name="settings_theme_title">Thème</string>
+	<string name="choose_action">Selectionner l\'action à effectuer</string>
+</resources>

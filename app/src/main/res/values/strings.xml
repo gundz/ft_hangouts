@@ -3,7 +3,7 @@
 	<string name="settings_actionBarColorList_title">Choose action bar color</string>
 	<string name="settings_theme_title">Theme</string>
 	<string name="main_menu_settings">Settings</string>
-	<string name="title_activity_add_edit_contact">AddEditContactActivity</string>
+	<string name="title_activity_add_edit_contact" translatable="false">AddEditContactActivity</string>
 	<string name="cancel">Cancel</string>
 	<string name="contact_add">Add contact</string>
 	<string name="contact_edit">Edit contact</string>
