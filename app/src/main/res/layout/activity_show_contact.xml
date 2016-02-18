@@ -11,6 +11,17 @@
 	tools:context="com.fgundlac.ft_hangouts.Contacts.ShowContactActivity"
 	android:orientation="vertical">
 
+	<Button
+		android:id="@+id/takePhoto"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="take photo"/>
+
+	<ImageView
+		android:id="@+id/contactPhoto"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"/>
+
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

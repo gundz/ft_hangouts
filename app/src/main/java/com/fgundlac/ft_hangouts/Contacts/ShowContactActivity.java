@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -13,7 +15,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -88,6 +92,27 @@ public class ShowContactActivity extends BaseClass
 		database.close();
 
 		setContactInfos(contact);
+
+		Button takePhoto = (Button) findViewById(R.id.takePhoto);
+		takePhoto.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent i = new Intent(getApplicationContext(), ContactPhoto.class);
+				i.putExtra("com.fgundlac.ft_hangouts.contact.photo.contact", contact);
+				startActivityForResult(i, ContactPhoto.CAMERA_REQUEST);
+			}
+		});
+	}
+
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if (requestCode == ContactPhoto.CAMERA_REQUEST && resultCode == ContactPhoto.RESULT)
+		{
+			ImageView photo = (ImageView) findViewById(R.id.contactPhoto);
+			photo.setImageBitmap(ContactPhoto.loadImageFromStorage(getApplicationContext(), contact));
+		}
 	}
 
 	private void setContactInfos(Contact c)
@@ -126,7 +151,7 @@ public class ShowContactActivity extends BaseClass
 	protected void editContact()
 	{
 		Intent intent = new Intent(this, AddEditContactActivity.class);
-		intent.putExtra("com.fgundlac.ft_hangouts.contact.edit", (int)contact.getId());
+		intent.putExtra("com.fgundlac.ft_hangouts.contact.edit", (int) contact.getId());
 		startActivity(intent);
 	}
 
