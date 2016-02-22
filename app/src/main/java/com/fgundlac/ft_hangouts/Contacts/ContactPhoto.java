@@ -1,16 +1,13 @@
 package com.fgundlac.ft_hangouts.Contacts;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.fgundlac.ft_hangouts.BaseClass;
 import com.fgundlac.ft_hangouts.R;
@@ -22,7 +19,6 @@ import java.io.FileOutputStream;
 
 public class ContactPhoto extends BaseClass
 {
-	public static final int RESULT = 1;
 	public static final int CAMERA_REQUEST = 1888;
 	protected Contact contact;
 	protected File file;
@@ -48,9 +44,9 @@ public class ContactPhoto extends BaseClass
 		{
 			Bitmap photo = (Bitmap) data.getExtras().get("data");
 			saveToInternalStorage(photo, contact);
-			setResult(RESULT);
-			finish();
+			setResult(RESULT_OK);
 		}
+		finish();
 	}
 
 	private void saveToInternalStorage(Bitmap bitmapImage, Contact contact)
@@ -93,8 +89,7 @@ public class ContactPhoto extends BaseClass
 		}
 		catch (FileNotFoundException e)
 		{
-			e.printStackTrace();
-			//getDefaultimage
+			bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_people);
 		}
 		return bitmap;
 	}

@@ -6,16 +6,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class MySQLiteHelper extends SQLiteOpenHelper
 {
-	public static final String DATABASE_NAME =      "ft_hangouts.db";
-	public static final int DATABASE_VERSION =      1;
+	public static final String DATABASE_NAME = "ft_hangouts.db";
+	public static final int DATABASE_VERSION = 1;
 
-	public static final String CONTACT_TABLE =     "contacts";
-	public static final String CONTACTS_KEY =       "_id";
-	public static final String CONTACT_NAME =       "name";
-	public static final String CONTACT_LASTNAME =   "lastName";
-	public static final String CONTACT_NICKNAME =   "nickname";
-	public static final String CONTACT_NUMBER =     "number";
-	public static final String CONTACT_EMAIL =      "email";
+	public static final String CONTACT_TABLE = "contacts";
+	public static final String CONTACTS_KEY = "_id";
+	public static final String CONTACT_NAME = "name";
+	public static final String CONTACT_LASTNAME = "lastName";
+	public static final String CONTACT_NICKNAME = "nickname";
+	public static final String CONTACT_NUMBER = "number";
+	public static final String CONTACT_EMAIL = "email";
 	public static final String CONTACT_TABLE_CREATE =
 			"CREATE TABLE " + CONTACT_TABLE + " (" +
 					CONTACTS_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -24,14 +24,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper
 					+ CONTACT_NICKNAME + " TEXT, "
 					+ CONTACT_NUMBER + " TEXT, "
 					+ CONTACT_EMAIL + " TEXT "
-			+ ");";
+					+ ");";
 
-	public static final String SMS_TABLE =          "sms";
-	public static final String SMS_KEY =            "_id";
-	public static final String SMS_NUMBER =         "number";
-	public static final String SMS_CONTENT =        "content";
-	public static final String SMS_TYPE =           "received";
-	public static final String SMS_DATE =           "date";
+	public static final String SMS_TABLE = "sms";
+	public static final String SMS_KEY = "_id";
+	public static final String SMS_NUMBER = "number";
+	public static final String SMS_CONTENT = "content";
+	public static final String SMS_TYPE = "received";
+	public static final String SMS_DATE = "date";
 	public static final String SMS_TABLE_CREATE =
 			"CREATE TABLE " + SMS_TABLE + " (" +
 					SMS_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -39,7 +39,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper
 					+ SMS_CONTENT + " TEXT, "
 					+ SMS_TYPE + " INTEGER, "
 					+ SMS_DATE + " TEXT"
-			+ ");";
+					+ ");";
 
 	public MySQLiteHelper(Context context)
 	{

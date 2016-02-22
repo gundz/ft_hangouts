@@ -1,9 +1,10 @@
 package com.fgundlac.ft_hangouts;
 
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
-public class PreferenceActivity extends BaseClass
+public class PreferenceActivity extends android.preference.PreferenceActivity
 {
 	@Override
 	protected void onCreate(Bundle savedInstanceState)

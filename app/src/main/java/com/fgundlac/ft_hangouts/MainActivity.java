@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,6 +35,9 @@ public class MainActivity extends BaseClass
 
 	private void initViews()
 	{
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+
 		contactListView = (ListView) findViewById(R.id.contactListView);
 		addContactButton = (FloatingActionButton) findViewById(R.id.addContactButton);
 		addContactButton.setOnClickListener(addContactListener);

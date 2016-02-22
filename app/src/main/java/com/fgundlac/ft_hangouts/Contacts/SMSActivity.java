@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -38,10 +40,13 @@ public class SMSActivity extends BaseClass
 
 	private void initViews()
 	{
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 		SMSContentEditText = (EditText) findViewById(R.id.SMSEditText);
 		SMSSendButton = (ImageButton) findViewById(R.id.SMSSend);
 		SMSSendButton.setOnClickListener(sendSMSOnClickListener);
-
 		smsListView = (ListView) findViewById(R.id.smsListView);
 	}
 
@@ -56,7 +61,7 @@ public class SMSActivity extends BaseClass
 		contact = contactDatabase.getContact((long) id);
 		contactDatabase.close();
 
-		setTitle(contact.getFullName());
+		getSupportActionBar().setTitle(contact.getFullName());
 
 		smsDatabase = new SMSDataSource(this);
 
@@ -198,5 +203,16 @@ public class SMSActivity extends BaseClass
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			// Respond to the action bar's Up/Home button
+			case android.R.id.home:
+				NavUtils.navigateUpFromSameTask(this);
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

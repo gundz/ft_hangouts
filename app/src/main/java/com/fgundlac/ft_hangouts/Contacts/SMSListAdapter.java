@@ -17,23 +17,9 @@ import java.util.List;
 
 public class SMSListAdapter extends BaseAdapter
 {
-	private Activity  context;
+	private Activity context;
 	private List<SMS> smsList;
 	private LayoutInflater layoutInflater = null;
-
-	class SMSListViewHolder
-	{
-		public TextView textViewDate;
-		public TextView textViewContent;
-		public RelativeLayout SMSRelativeLayout;
-
-		public SMSListViewHolder(View base)
-		{
-			textViewDate = (TextView) base.findViewById(R.id.dateTextView);
-			textViewContent = (TextView) base.findViewById(R.id.contentTextView);
-			SMSRelativeLayout = (RelativeLayout) base.findViewById(R.id.SMSLayout);
-		}
-	}
 
 	public SMSListAdapter(Activity context, ArrayList<SMS> smsList)
 	{
@@ -63,9 +49,9 @@ public class SMSListAdapter extends BaseAdapter
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-		View                v = convertView;
-		SMSListViewHolder   viewHolder;
-		SMS                 sms;
+		View v = convertView;
+		SMSListViewHolder viewHolder;
+		SMS sms;
 
 		if (convertView == null)
 		{
@@ -94,5 +80,19 @@ public class SMSListAdapter extends BaseAdapter
 		viewHolder.textViewContent.setText(sms.getContent());
 
 		return v;
+	}
+
+	class SMSListViewHolder
+	{
+		public TextView textViewDate;
+		public TextView textViewContent;
+		public RelativeLayout SMSRelativeLayout;
+
+		public SMSListViewHolder(View base)
+		{
+			textViewDate = (TextView) base.findViewById(R.id.dateTextView);
+			textViewContent = (TextView) base.findViewById(R.id.contentTextView);
+			SMSRelativeLayout = (RelativeLayout) base.findViewById(R.id.SMSLayout);
+		}
 	}
 }

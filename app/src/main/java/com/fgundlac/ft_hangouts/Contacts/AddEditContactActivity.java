@@ -2,6 +2,7 @@ package com.fgundlac.ft_hangouts.Contacts;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,19 +14,31 @@ import com.fgundlac.ft_hangouts.R;
 
 public class AddEditContactActivity extends BaseClass
 {
-	EditText                    nameEditText;
-	EditText                    lastNameEditText;
-	EditText                    nicknameEditText;
-	EditText                    numberEditText;
-	EditText                    emailEditText;
-	FloatingActionButton        saveContactButton;
+	EditText nameEditText;
+	EditText lastNameEditText;
+	EditText nicknameEditText;
+	EditText numberEditText;
+	EditText emailEditText;
+	FloatingActionButton saveContactButton;
 
-	Contact                     contact;
-	int                         id;
-	ContactsDataSource          database;
+	Contact contact;
+	int id;
+	ContactsDataSource database;
+	public View.OnClickListener saveContactButtonListener = new View.OnClickListener()
+	{
+		@Override
+		public void onClick(View v)
+		{
+			saveContact();
+			finish();
+		}
+	};
 
 	private void initViews()
 	{
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+
 		nameEditText = (EditText) findViewById(R.id.nameEditText);
 		lastNameEditText = (EditText) findViewById(R.id.lastNameEditText);
 		nicknameEditText = (EditText) findViewById(R.id.nicknameEditText);
@@ -51,11 +64,14 @@ public class AddEditContactActivity extends BaseClass
 			setContactInfos(contact);
 		}
 		else
+		{
 			contact = new Contact();
+		}
 	}
 
 	private void setContactInfos(Contact c)
 	{
+		getSupportActionBar().setTitle(c.getFullName());
 		nameEditText.setText(c.getName());
 		lastNameEditText.setText(c.getLastName());
 		nicknameEditText.setText(c.getNickname());
@@ -73,21 +89,15 @@ public class AddEditContactActivity extends BaseClass
 
 		database.open();
 		if (id == -1)
+		{
 			database.insert(contact);
+		}
 		else
+		{
 			database.update(contact);
+		}
 		database.close();
 	}
-
-	public View.OnClickListener saveContactButtonListener = new View.OnClickListener()
-	{
-		@Override
-		public void onClick(View v)
-		{
-			saveContact();
-			finish();
-		}
-	};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)

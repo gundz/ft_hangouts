@@ -5,7 +5,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -21,7 +23,6 @@ public class BaseClass extends AppCompatActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setActionBarColor();
 	}
 
 	@Override
@@ -35,6 +36,7 @@ public class BaseClass extends AppCompatActivity
 
 			Toast.makeText(getApplicationContext(), formatedDate, Toast.LENGTH_SHORT).show();
 		}
+		setActionBarColor();
 	}
 
 	@Override
@@ -51,8 +53,11 @@ public class BaseClass extends AppCompatActivity
 		int colorID = getResources().getIdentifier(colorPref, "color", getPackageName());
 		String color = getResources().getString(colorID);
 
-		android.support.v7.app.ActionBar bar = getSupportActionBar();
-		if (bar != null)
-			bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(color)));
+		CollapsingToolbarLayout  collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+		if (collapsingToolbarLayout != null)
+			collapsingToolbarLayout.setContentScrim(new ColorDrawable(Color.parseColor(color)));
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		if (toolbar != null)
+			toolbar.setBackground(new ColorDrawable(Color.parseColor(color)));
 	}
 }
