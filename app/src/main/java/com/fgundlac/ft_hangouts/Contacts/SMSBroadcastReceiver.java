@@ -24,9 +24,13 @@ public class SMSBroadcastReceiver extends BroadcastReceiver
 				for (int i = 0; i < pdus.length; i++)
 				{
 					if (Build.VERSION.SDK_INT >= 23)
+					{
 						messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i], "3gpp");
+					}
 					else
+					{
 						messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
+					}
 				}
 				for (SmsMessage message : messages)
 				{

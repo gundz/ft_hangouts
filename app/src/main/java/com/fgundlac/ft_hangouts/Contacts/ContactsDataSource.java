@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class ContactsDataSource
 {
-	private SQLiteDatabase          database;
-	private MySQLiteHelper          dbHelper;
+	private SQLiteDatabase database;
+	private MySQLiteHelper dbHelper;
 
 	public ContactsDataSource(Context context)
 	{
@@ -32,7 +32,7 @@ public class ContactsDataSource
 
 	public ContentValues contactToContentValues(Contact contact)
 	{
-		ContentValues               value = new ContentValues();
+		ContentValues value = new ContentValues();
 
 		value.put(MySQLiteHelper.CONTACT_NAME, contact.getName());
 		value.put(MySQLiteHelper.CONTACT_LASTNAME, contact.getLastName());
@@ -44,14 +44,14 @@ public class ContactsDataSource
 
 	public Contact insert(Contact contact)
 	{
-		ContentValues               value = contactToContentValues(contact);
+		ContentValues value = contactToContentValues(contact);
 		long id = database.insert(MySQLiteHelper.CONTACT_TABLE, null, value);
 		return getContact(id);
 	}
 
 	public void update(Contact contact)
 	{
-		ContentValues               value = contactToContentValues(contact);
+		ContentValues value = contactToContentValues(contact);
 
 		database.update(MySQLiteHelper.CONTACT_TABLE, value, MySQLiteHelper.CONTACTS_KEY + " = ?", new String[]{String.valueOf(contact.getId())});
 	}
@@ -67,29 +67,33 @@ public class ContactsDataSource
 
 		cursor.moveToFirst();
 		if (cursor.getCount() == 0)
+		{
 			return null;
+		}
 		return cursorToContact(cursor);
 	}
 
 	public boolean checkIfNumberExits(String number)
 	{
-        ArrayList<Contact>          contactList;
+		ArrayList<Contact> contactList;
 
-        this.open();
-        contactList = this.getAllContacts();
-        this.close();
-        for (int i = 0; i < contactList.size(); i++)
-        {
-            if (Contact.compareNumber(number, contactList.get(i).getNumber()))
-                return true;
-        }
-        return false;
-    }
+		this.open();
+		contactList = this.getAllContacts();
+		this.close();
+		for (int i = 0; i < contactList.size(); i++)
+		{
+			if (Contact.compareNumber(number, contactList.get(i).getNumber()))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public ArrayList<Contact> getAllContacts()
 	{
-		ArrayList<Contact>          contacts = new ArrayList<>();
-		Cursor                      cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.CONTACT_TABLE, null);
+		ArrayList<Contact> contacts = new ArrayList<>();
+		Cursor cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.CONTACT_TABLE, null);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast())
@@ -104,8 +108,8 @@ public class ContactsDataSource
 
 	private Contact cursorToContact(Cursor cursor)
 	{
-		Contact                     contact = new Contact();
-		int                         i = 0;
+		Contact contact = new Contact();
+		int i = 0;
 
 		contact.setId(cursor.getLong(i++));
 		contact.setName(cursor.getString(i++));

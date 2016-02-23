@@ -3,11 +3,9 @@ package com.fgundlac.ft_hangouts.Contacts;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.fgundlac.ft_hangouts.BaseClass;
 import com.fgundlac.ft_hangouts.R;
@@ -22,6 +20,36 @@ public class ContactPhoto extends BaseClass
 	public static final int CAMERA_REQUEST = 1888;
 	protected Contact contact;
 	protected File file;
+
+	static public File getFile(Context context)
+	{
+		ContextWrapper cw = new ContextWrapper(context);
+		return cw.getDir("imageDir", Context.MODE_PRIVATE);
+	}
+
+	static public String getPath(Context context)
+	{
+		return getFile(context).getAbsolutePath();
+	}
+
+	static public String getFileName(String name)
+	{
+		return name + ".jpg";
+	}
+
+	static public Bitmap loadImageFromStorage(Context context, Contact contact)
+	{
+		Bitmap bitmap = null;
+		try
+		{
+			File f = new File(getPath(context), getFileName(String.valueOf(contact.getId())));
+			bitmap = BitmapFactory.decodeStream(new FileInputStream(f));
+		} catch (FileNotFoundException e)
+		{
+			bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_people);
+		}
+		return bitmap;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -59,36 +87,5 @@ public class ContactPhoto extends BaseClass
 		{
 			e.printStackTrace();
 		}
-	}
-
-	static public File getFile(Context context)
-	{
-		ContextWrapper cw = new ContextWrapper(context);
-		return cw.getDir("imageDir", Context.MODE_PRIVATE);
-	}
-
-	static public String getPath(Context context)
-	{
-		return getFile(context).getAbsolutePath();
-	}
-
-	static public String getFileName(String name)
-	{
-		return name + ".jpg";
-	}
-
-	static public Bitmap loadImageFromStorage(Context context, Contact contact)
-	{
-		Bitmap bitmap = null;
-		try
-		{
-			File f = new File(getPath(context), getFileName(String.valueOf(contact.getId())));
-			bitmap = BitmapFactory.decodeStream(new FileInputStream(f));
-		}
-		catch (FileNotFoundException e)
-		{
-			bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_people);
-		}
-		return bitmap;
 	}
 }

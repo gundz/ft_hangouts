@@ -27,16 +27,61 @@ import java.util.Calendar;
 
 public class SMSActivity extends BaseClass
 {
-	EditText                SMSContentEditText;
-	ImageButton             SMSSendButton;
+	public static final int MENU_DELETE = 1;
+	EditText SMSContentEditText;
+	ImageButton SMSSendButton;
+	ArrayList<SMS> smsList;
+	SMSListAdapter smsListAdapter;
+	ListView smsListView;
+	public BroadcastReceiver receiveSMSBroadcast = new BroadcastReceiver()
+	{
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			if (intent.getAction().equals("com.fgundlac.ft_hangouts.sms.received"))
+			{
+				SMS sms = intent.getParcelableExtra("com.fgundlac.ft_hangouts.sms.received.sms");
+				if (sms != null)
+				{
+					smsList.add(sms);
+					smsListAdapter.notifyDataSetChanged();
+					listViewMoveToLast();
+				}
+			}
+		}
+	};
+	ContactsDataSource contactDatabase;
+	Contact contact;
+	SMSDataSource smsDatabase;
+	public View.OnClickListener sendSMSOnClickListener = new View.OnClickListener()
+	{
+		@Override
+		public void onClick(View v)
+		{
+			SmsManager manager = SmsManager.getDefault();
 
-	ArrayList<SMS>          smsList;
-	SMSListAdapter          smsListAdapter;
-	ListView                smsListView;
+			String number = contact.getNumber();
+			String content = SMSContentEditText.getText().toString();
 
-	ContactsDataSource      contactDatabase;
-	Contact                 contact;
-	SMSDataSource           smsDatabase;
+			if (content.length() > 0 && content.length() < 160)
+			{
+				manager.sendTextMessage(number, null, content, null, null);
+			}
+			else
+			{
+				return;
+			}
+
+			SMSContentEditText.setText("");
+
+			smsDatabase.open();
+			SMS sms = smsDatabase.insert(new SMS(number, content, SMS.Type.SENDED, Calendar.getInstance()));
+			smsDatabase.close();
+			smsList.add(sms);
+			smsListAdapter.notifyDataSetChanged();
+			listViewMoveToLast();
+		}
+	};
 
 	private void initViews()
 	{
@@ -54,7 +99,9 @@ public class SMSActivity extends BaseClass
 	{
 		int id;
 		if ((id = getIntent().getIntExtra("com.fgundlac.ft_hangouts.contact.sms", -1)) == -1)
+		{
 			finish();
+		}
 
 		contactDatabase = new ContactsDataSource(this);
 		contactDatabase.open();
@@ -99,7 +146,7 @@ public class SMSActivity extends BaseClass
 
 	public ArrayList<SMS> getSMSList()
 	{
-		ArrayList<SMS>      smsList;
+		ArrayList<SMS> smsList;
 
 		smsDatabase.open();
 		smsList = smsDatabase.getSMSFromContact(contact);
@@ -111,52 +158,6 @@ public class SMSActivity extends BaseClass
 	{
 		smsListView.setSelection(smsListAdapter.getCount() - 1);
 	}
-
-	public BroadcastReceiver receiveSMSBroadcast = new BroadcastReceiver()
-	{
-		@Override
-		public void onReceive(Context context, Intent intent)
-		{
-			if (intent.getAction().equals("com.fgundlac.ft_hangouts.sms.received"))
-			{
-				SMS sms = intent.getParcelableExtra("com.fgundlac.ft_hangouts.sms.received.sms");
-				if (sms != null)
-				{
-					smsList.add(sms);
-					smsListAdapter.notifyDataSetChanged();
-					listViewMoveToLast();
-				}
-			}
-		}
-	};
-
-	public View.OnClickListener sendSMSOnClickListener = new View.OnClickListener()
-	{
-		@Override
-		public void onClick(View v)
-		{
-			SmsManager manager = SmsManager.getDefault();
-
-			String          number = contact.getNumber();
-			String          content = SMSContentEditText.getText().toString();
-
-			if (content.length() > 0 && content.length() < 160)
-				manager.sendTextMessage(number, null, content, null, null);
-			else
-				return ;
-
-			SMSContentEditText.setText("");
-
-			smsDatabase.open();
-			SMS sms = smsDatabase.insert(new SMS(number, content, SMS.Type.SENDED, Calendar.getInstance()));
-			smsDatabase.close();
-			smsList.add(sms);
-			smsListAdapter.notifyDataSetChanged();
-			listViewMoveToLast();
-		}
-	};
-
-	public static final int MENU_DELETE = 1;
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
@@ -173,7 +174,7 @@ public class SMSActivity extends BaseClass
 		final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		final SMS sms = smsList.get((int) menuInfo.id);
 
-		if(item.getItemId() == MENU_DELETE)
+		if (item.getItemId() == MENU_DELETE)
 		{
 			new AlertDialog.Builder(SMSActivity.this)
 					.setTitle(getResources().getString(R.string.contact_delete_entry))
@@ -206,8 +207,10 @@ public class SMSActivity extends BaseClass
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
 			// Respond to the action bar's Up/Home button
 			case android.R.id.home:
 				NavUtils.navigateUpFromSameTask(this);

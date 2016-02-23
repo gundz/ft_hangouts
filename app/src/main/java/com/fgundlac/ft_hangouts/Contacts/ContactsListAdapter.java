@@ -16,27 +16,9 @@ import java.util.List;
 
 public class ContactsListAdapter extends BaseAdapter
 {
-	private Activity            context;
-	private List<Contact>       contactList;
-	private LayoutInflater      layoutInflater = null;
-
-	class ContactListViewHolder
-	{
-		public TextView textViewName;
-		public TextView textViewNickname;
-		public TextView textViewNumber;
-		public TextView textViewEmail;
-		public ImageView imageViewContactPhoto;
-
-		public ContactListViewHolder(View base)
-		{
-			textViewName = (TextView) base.findViewById(R.id.nameTextView);
-			textViewNickname = (TextView) base.findViewById(R.id.nicknameTextView);
-			textViewNumber = (TextView) base.findViewById(R.id.numberTextView);
-			textViewEmail = (TextView) base.findViewById(R.id.emailTextView);
-			imageViewContactPhoto = (ImageView) base.findViewById(R.id.contactPhoto);
-		}
-	}
+	private Activity context;
+	private List<Contact> contactList;
+	private LayoutInflater layoutInflater = null;
 
 	public ContactsListAdapter(Activity context, ArrayList<Contact> contactList)
 	{
@@ -66,9 +48,9 @@ public class ContactsListAdapter extends BaseAdapter
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-		View                    v = convertView;
-		ContactListViewHolder   viewHolder;
-		Contact                 contact;
+		View v = convertView;
+		ContactListViewHolder viewHolder;
+		Contact contact;
 
 		if (convertView == null)
 		{
@@ -88,5 +70,23 @@ public class ContactsListAdapter extends BaseAdapter
 		viewHolder.imageViewContactPhoto.setImageBitmap(ContactPhoto.loadImageFromStorage(context, contact));
 
 		return v;
+	}
+
+	class ContactListViewHolder
+	{
+		public TextView textViewName;
+		public TextView textViewNickname;
+		public TextView textViewNumber;
+		public TextView textViewEmail;
+		public ImageView imageViewContactPhoto;
+
+		public ContactListViewHolder(View base)
+		{
+			textViewName = (TextView) base.findViewById(R.id.nameTextView);
+			textViewNickname = (TextView) base.findViewById(R.id.nicknameTextView);
+			textViewNumber = (TextView) base.findViewById(R.id.numberTextView);
+			textViewEmail = (TextView) base.findViewById(R.id.emailTextView);
+			imageViewContactPhoto = (ImageView) base.findViewById(R.id.contactPhoto);
+		}
 	}
 }
