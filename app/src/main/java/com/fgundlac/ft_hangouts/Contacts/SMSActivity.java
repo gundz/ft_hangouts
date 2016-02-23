@@ -84,7 +84,7 @@ public class SMSActivity extends BaseClass
 		super.onResume();
 
 		smsList = getSMSList();
-		smsListAdapter = new SMSListAdapter(this, smsList);
+		smsListAdapter = new SMSListAdapter(this, smsList, contact);
 		smsListView.setAdapter(smsListAdapter);
 		registerForContextMenu(smsListView);
 		listViewMoveToLast();

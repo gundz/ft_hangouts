@@ -52,8 +52,6 @@ public class ContactPhoto extends BaseClass
 	private void saveToInternalStorage(Bitmap bitmapImage, Contact contact)
 	{
 		File mypath = new File(getPath(getApplicationContext()), getFileName(String.valueOf(contact.getId())));
-		Log.d("PATH", mypath.getAbsolutePath());
-
 		try (FileOutputStream fos = new FileOutputStream(mypath))
 		{
 			bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);

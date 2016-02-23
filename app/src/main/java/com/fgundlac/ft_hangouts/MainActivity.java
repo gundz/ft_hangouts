@@ -27,9 +27,46 @@ import java.util.ArrayList;
 
 public class MainActivity extends BaseClass
 {
+	public static final int MENU_EDIT = 1;
+	public static final int MENU_DELETE = 2;
+	public View.OnClickListener addContactListener = new View.OnClickListener()
+	{
+		@Override
+		public void onClick(View v)
+		{
+			Intent intent = new Intent(MainActivity.this, AddEditContactActivity.class);
+			startActivity(intent);
+		}
+	};
 	ContactsDataSource database;
 	ArrayList<Contact> contactList = new ArrayList<>();
+	public AdapterView.OnItemClickListener contactClickListener = new AdapterView.OnItemClickListener()
+	{
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+		{
+			Intent intent = new Intent(MainActivity.this, ShowContactActivity.class);
+			intent.putExtra("com.fgundlac.ft_hangouts.contact.show", (int) contactList.get(position).getId());
+			startActivity(intent);
+		}
+	};
 	ContactsListAdapter contactListAdapter;
+	public BroadcastReceiver addContactBroadcast = new BroadcastReceiver()
+	{
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			if (intent.getAction().equals("com.fgundlac.ft_hangouts.contact.added"))
+			{
+				Contact c = intent.getParcelableExtra("com.fgundlac.ft_hangouts.contact.added.contact");
+				if (c != null)
+				{
+					contactList.add(c);
+					contactListAdapter.notifyDataSetChanged();
+				}
+			}
+		}
+	};
 	ListView contactListView;
 	FloatingActionButton addContactButton;
 
@@ -78,27 +115,6 @@ public class MainActivity extends BaseClass
 		unregisterReceiver(addContactBroadcast);
 	}
 
-	public AdapterView.OnItemClickListener contactClickListener = new AdapterView.OnItemClickListener()
-	{
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-		{
-			Intent intent = new Intent(MainActivity.this, ShowContactActivity.class);
-			intent.putExtra("com.fgundlac.ft_hangouts.contact.show", (int) contactList.get(position).getId());
-			startActivity(intent);
-		}
-	};
-
-	public View.OnClickListener addContactListener = new View.OnClickListener()
-	{
-		@Override
-		public void onClick(View v)
-		{
-			Intent intent = new Intent(MainActivity.this, AddEditContactActivity.class);
-			startActivity(intent);
-		}
-	};
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -126,26 +142,6 @@ public class MainActivity extends BaseClass
 		startActivity(intent);
 	}
 
-	public BroadcastReceiver addContactBroadcast = new BroadcastReceiver()
-	{
-		@Override
-		public void onReceive(Context context, Intent intent)
-		{
-			if (intent.getAction().equals("com.fgundlac.ft_hangouts.contact.added"))
-			{
-				Contact c = intent.getParcelableExtra("com.fgundlac.ft_hangouts.contact.added.contact");
-				if (c != null)
-				{
-					contactList.add(c);
-					contactListAdapter.notifyDataSetChanged();
-				}
-			}
-		}
-	};
-
-	public static final int MENU_EDIT = 1;
-	public static final int MENU_DELETE = 2;
-
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
 	{
@@ -168,7 +164,7 @@ public class MainActivity extends BaseClass
 			intent.putExtra("com.fgundlac.ft_hangouts.contact.edit", (int) c.getId());
 			startActivity(intent);
 		}
-		else if(item.getItemId() == MENU_DELETE)
+		else if (item.getItemId() == MENU_DELETE)
 		{
 			new AlertDialog.Builder(MainActivity.this)
 					.setTitle(getResources().getString(R.string.contact_delete_entry))

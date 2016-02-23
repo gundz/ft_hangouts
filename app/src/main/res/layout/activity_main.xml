@@ -5,16 +5,17 @@
                 android:layout_height="match_parent"
                 tools:context=".MyActionBarActivity">
 
-	<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-	                                   android:id="@+id/toolbar"
+	<android.support.v7.widget.Toolbar android:id="@+id/toolbar"
+	                                   xmlns:android="http://schemas.android.com/apk/res/android"
 	                                   android:layout_width="match_parent"
 	                                   android:layout_height="wrap_content"
 	                                   android:layout_alignParentTop="true"
-	                                   android:minHeight="?android:attr/actionBarSize" />
+	                                   android:minHeight="?android:attr/actionBarSize"/>
 
-	<include layout="@layout/activity_main_content"
-	         android:layout_width="match_parent"
-	         android:layout_height="match_parent"
-	         android:layout_below="@+id/toolbar"/>
+	<include
+		layout="@layout/activity_main_content"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@+id/toolbar"/>
 
 </RelativeLayout>

@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="horizontal">
+
+	<ImageView
+		android:id="@+id/contactPhoto1"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_weight="90"
+		android:src="@drawable/ic_people"/>
 
 	<RelativeLayout
 		android:id="@+id/SMSLayout"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="match_parent"
+		android:layout_weight="20">
 
 		<TextView
 			android:id="@+id/dateTextView"
@@ -22,5 +32,12 @@
 			android:textSize="17dp"/>
 	</RelativeLayout>
 
+	<ImageView
+		android:id="@+id/contactPhoto2"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_weight="90"
+		android:src="@drawable/ic_people"/>
 
-</RelativeLayout>
+
+</LinearLayout>
