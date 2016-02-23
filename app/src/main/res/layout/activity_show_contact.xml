@@ -1,48 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	tools:context=".Contacts.ShowContactActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".Contacts.ShowContactActivity">
 
-	<android.support.design.widget.AppBarLayout
-		android:id="@+id/appBarLayout"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:fitsSystemWindows="true">
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                                   android:id="@+id/toolbar"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:layout_alignParentTop="true"
+                                   android:minHeight="?android:attr/actionBarSize" />
 
-		<android.support.design.widget.CollapsingToolbarLayout
-			android:id="@+id/collapsing_toolbar"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:fitsSystemWindows="true"
-			app:expandedTitleMarginEnd="64dp"
-			app:expandedTitleMarginStart="48dp"
-			app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-			<ImageView
-				android:id="@+id/contactPhoto"
-				android:layout_width="match_parent"
-				android:layout_height="250dp"
-				android:scaleType="centerCrop"
-				app:layout_collapseMode="parallax"/>
-
-			<android.support.v7.widget.Toolbar
-				android:id="@+id/toolbar"
-				android:layout_width="match_parent"
-				android:layout_height="?attr/actionBarSize"
-				app:layout_collapseMode="pin"/>
-
-		</android.support.design.widget.CollapsingToolbarLayout>
-
-	</android.support.design.widget.AppBarLayout>
-
-	<include
-		layout="@layout/activity_show_contact_content"
+	<ScrollView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+		android:layout_below="@+id/toolbar">
+		<include
+			layout="@layout/activity_show_contact_content"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"/>
+	</ScrollView>
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

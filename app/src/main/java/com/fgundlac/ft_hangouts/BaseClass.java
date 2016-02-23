@@ -53,9 +53,6 @@ public class BaseClass extends AppCompatActivity
 		int colorID = getResources().getIdentifier(colorPref, "color", getPackageName());
 		String color = getResources().getString(colorID);
 
-		CollapsingToolbarLayout  collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-		if (collapsingToolbarLayout != null)
-			collapsingToolbarLayout.setContentScrim(new ColorDrawable(Color.parseColor(color)));
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		if (toolbar != null)
 			toolbar.setBackground(new ColorDrawable(Color.parseColor(color)));
