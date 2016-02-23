@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fgundlac.ft_hangouts.R;
@@ -25,6 +26,7 @@ public class ContactsListAdapter extends BaseAdapter
 		public TextView textViewNickname;
 		public TextView textViewNumber;
 		public TextView textViewEmail;
+		public ImageView imageViewContactPhoto;
 
 		public ContactListViewHolder(View base)
 		{
@@ -32,6 +34,7 @@ public class ContactsListAdapter extends BaseAdapter
 			textViewNickname = (TextView) base.findViewById(R.id.nicknameTextView);
 			textViewNumber = (TextView) base.findViewById(R.id.numberTextView);
 			textViewEmail = (TextView) base.findViewById(R.id.emailTextView);
+			imageViewContactPhoto = (ImageView) base.findViewById(R.id.contactPhoto);
 		}
 	}
 
@@ -82,6 +85,7 @@ public class ContactsListAdapter extends BaseAdapter
 		viewHolder.textViewNickname.setText(contact.getNickname());
 		viewHolder.textViewNumber.setText(contact.getNumber());
 		viewHolder.textViewEmail.setText(contact.getEmail());
+		viewHolder.imageViewContactPhoto.setImageBitmap(ContactPhoto.loadImageFromStorage(context, contact));
 
 		return v;
 	}
