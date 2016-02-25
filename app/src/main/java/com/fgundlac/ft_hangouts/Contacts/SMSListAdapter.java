@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fgundlac.ft_hangouts.R;
@@ -97,7 +97,7 @@ public class SMSListAdapter extends BaseAdapter
 	{
 		public TextView textViewDate;
 		public TextView textViewContent;
-		public RelativeLayout SMSRelativeLayout;
+		public LinearLayout SMSRelativeLayout;
 		public ImageView imageViewContactPhoto1;
 		public ImageView imageViewContactPhoto2;
 
@@ -105,7 +105,7 @@ public class SMSListAdapter extends BaseAdapter
 		{
 			textViewDate = (TextView) base.findViewById(R.id.dateTextView);
 			textViewContent = (TextView) base.findViewById(R.id.contentTextView);
-			SMSRelativeLayout = (RelativeLayout) base.findViewById(R.id.SMSLayout);
+			SMSRelativeLayout = (LinearLayout) base.findViewById(R.id.SMSLayout);
 			imageViewContactPhoto1 = (ImageView) base.findViewById(R.id.contactPhoto1);
 			imageViewContactPhoto2 = (ImageView) base.findViewById(R.id.contactPhoto2);
 		}

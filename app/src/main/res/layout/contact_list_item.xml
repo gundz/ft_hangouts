@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:paddingBottom="5dp"
-              android:paddingLeft="5dp"
-              android:paddingRight="5dp"
-              android:paddingTop="5dp">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
 	<LinearLayout
-		android:layout_width="wrap_content"
-		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
 		android:orientation="horizontal">
 
 		<ImageView
 			android:id="@+id/contactPhoto"
-			android:layout_width="50dp"
+			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:paddingRight="10dp"
-			android:scaleType="centerCrop"
-			android:src="@drawable/ic_people"/>
+			android:layout_weight="90"
+			android:src="@drawable/ic_people"
+			android:contentDescription="@string/contact_photo"
+			android:scaleType="centerCrop"/>
 
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_weight="10"
+			android:paddingLeft="5dp"
+			android:paddingStart="5dp"
+			android:paddingRight="5dp"
+			android:paddingEnd="5dp"
 			android:orientation="vertical">
 
 			<LinearLayout
@@ -33,19 +37,11 @@
 
 				<TextView
 					android:id="@+id/nameTextView"
-					android:layout_width="match_parent"
+					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:layout_weight="50"
 					android:text="@string/contact_name"
-					android:textSize="17sp"/>
-
-				<TextView
-					android:id="@+id/nicknameTextView"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_weight="50"
-					android:text="@string/contact_nickname"
-					android:textSize="17sp"/>
+					android:textSize="20sp"/>
 			</LinearLayout>
 
 			<LinearLayout
@@ -55,21 +51,14 @@
 
 				<TextView
 					android:id="@+id/numberTextView"
-					android:layout_width="match_parent"
+					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:layout_weight="50"
 					android:text="@string/contact_number"/>
-
-				<TextView
-					android:id="@+id/emailTextView"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_weight="50"
-					android:text="@string/contact_email"/>
 			</LinearLayout>
+
 		</LinearLayout>
 
 	</LinearLayout>
 
-
-</LinearLayout>
+</RelativeLayout>

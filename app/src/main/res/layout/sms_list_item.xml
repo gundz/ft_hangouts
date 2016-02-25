@@ -1,43 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:orientation="horizontal">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
 
-	<ImageView
-		android:id="@+id/contactPhoto1"
+	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_weight="90"
-		android:src="@drawable/ic_people"/>
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
 
-	<RelativeLayout
-		android:id="@+id/SMSLayout"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_weight="20">
+		<ImageView
+			android:id="@+id/contactPhoto1"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_weight="45"
+			android:src="@drawable/ic_people"
+			android:contentDescription="@string/contact_photo"
+			android:scaleType="centerCrop"/>
 
-		<TextView
-			android:id="@+id/dateTextView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"/>
-
-		<TextView
-			android:id="@+id/contentTextView"
-			android:layout_width="wrap_content"
+		<LinearLayout
+			android:id="@+id/SMSLayout"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/dateTextView"
-			android:textColor="#000000"
-			android:textSize="17dp"/>
-	</RelativeLayout>
+			android:layout_weight="10"
+			android:paddingLeft="5dp"
+			android:paddingStart="5dp"
+			android:paddingRight="5dp"
+			android:paddingEnd="5dp"
+			android:orientation="vertical">
 
-	<ImageView
-		android:id="@+id/contactPhoto2"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_weight="90"
-		android:src="@drawable/ic_people"/>
+			<LinearLayout
 
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal">
 
-</LinearLayout>
+				<TextView
+					android:id="@+id/dateTextView"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="50"/>
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal">
+
+				<TextView
+					android:id="@+id/contentTextView"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="50"
+					android:textColor="#000000"
+					android:textSize="17dp"/>
+			</LinearLayout>
+
+		</LinearLayout>
+
+		<ImageView
+			android:id="@+id/contactPhoto2"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_weight="45"
+			android:src="@drawable/ic_people"
+			android:contentDescription="@string/contact_photo"
+			android:scaleType="centerCrop"/>
+
+	</LinearLayout>
+
+</RelativeLayout>
