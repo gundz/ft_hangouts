@@ -51,7 +51,6 @@ public class ContactPhoto extends BaseClass
 		try
 		{
 			File f = new File(getPath(context), photoName);
-			Log.d("Atempt to load", f.getAbsolutePath());
 			bitmap = BitmapFactory.decodeStream(new FileInputStream(f));
 		} catch (FileNotFoundException e)
 		{
@@ -63,7 +62,6 @@ public class ContactPhoto extends BaseClass
 	private void saveToInternalStorage(Bitmap bitmapImage, String photoName)
 	{
 		File mypath = new File(getPath(getApplicationContext()), photoName);
-		Log.d("Saved to", mypath.getAbsolutePath());
 		try (FileOutputStream fos = new FileOutputStream(mypath))
 		{
 			bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
