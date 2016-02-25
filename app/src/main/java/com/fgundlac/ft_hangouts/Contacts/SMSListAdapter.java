@@ -31,7 +31,7 @@ public class SMSListAdapter extends BaseAdapter
 		this.smsList = smsList;
 		this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.contact = contact;
-		contactPhoto = ContactPhoto.loadImageFromStorage(context, contact);
+		contactPhoto = ContactPhoto.loadImageFromStorage(context, contact.getPhotoName());
 	}
 
 	@Override

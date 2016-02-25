@@ -39,6 +39,7 @@ public class ContactsDataSource
 		value.put(MySQLiteHelper.CONTACT_NICKNAME, contact.getNickname());
 		value.put(MySQLiteHelper.CONTACT_NUMBER, contact.getNumber());
 		value.put(MySQLiteHelper.CONTACT_EMAIL, contact.getEmail());
+		value.put(MySQLiteHelper.CONTACT_PHOTO_NAME, contact.getPhotoName());
 		return value;
 	}
 
@@ -116,7 +117,8 @@ public class ContactsDataSource
 		contact.setLastName(cursor.getString(i++));
 		contact.setNickname(cursor.getString(i++));
 		contact.setNumber(cursor.getString(i++));
-		contact.setEmail(cursor.getString(i));
+		contact.setEmail(cursor.getString(i++));
+		contact.setPhotoName(cursor.getString(i));
 		return contact;
 	}
 }

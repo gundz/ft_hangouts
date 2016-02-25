@@ -16,6 +16,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper
 	public static final String CONTACT_NICKNAME = "nickname";
 	public static final String CONTACT_NUMBER = "number";
 	public static final String CONTACT_EMAIL = "email";
+	public static final String CONTACT_PHOTO_NAME = "photoName";
 	public static final String CONTACT_TABLE_CREATE =
 			"CREATE TABLE " + CONTACT_TABLE + " (" +
 					CONTACTS_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -23,7 +24,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper
 					+ CONTACT_LASTNAME + " TEXT, "
 					+ CONTACT_NICKNAME + " TEXT, "
 					+ CONTACT_NUMBER + " TEXT, "
-					+ CONTACT_EMAIL + " TEXT "
+					+ CONTACT_EMAIL + " TEXT, "
+					+ CONTACT_PHOTO_NAME + " TEXT "
 					+ ");";
 
 	public static final String SMS_TABLE = "sms";

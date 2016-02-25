@@ -10,6 +10,25 @@ import java.util.Locale;
 
 public class Contact implements Parcelable
 {
+
+	@Override
+	public int describeContents()
+	{
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags)
+	{
+		dest.writeInt((int) id);
+		dest.writeString(name);
+		dest.writeString(lastName);
+		dest.writeString(nickname);
+		dest.writeString(number);
+		dest.writeString(email);
+		dest.writeString(photoName);
+	}
+
 	public static final Parcelable.Creator<Contact> CREATOR = new Parcelable.Creator<Contact>()
 	{
 		@Override
@@ -24,6 +43,7 @@ public class Contact implements Parcelable
 			return new Contact[size];
 		}
 	};
+
 	protected static final int NUMBER_COMP = 9;
 	protected long id;
 	protected String name = "";
@@ -31,6 +51,7 @@ public class Contact implements Parcelable
 	protected String nickname = "";
 	protected String number = "";
 	protected String email = "";
+	protected String photoName;
 
 	public Contact()
 	{
@@ -82,17 +103,6 @@ public class Contact implements Parcelable
 		contactDatabase.open();
 		contactDatabase.deleteContact(this);
 		contactDatabase.close();
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags)
-	{
-		dest.writeInt((int) id);
-		dest.writeString(name);
-		dest.writeString(lastName);
-		dest.writeString(nickname);
-		dest.writeString(number);
-		dest.writeString(email);
 	}
 
 	public long getId()
@@ -160,9 +170,13 @@ public class Contact implements Parcelable
 		this.email = email;
 	}
 
-	@Override
-	public int describeContents()
+	public String getPhotoName()
 	{
-		return 0;
+		return photoName;
+	}
+
+	public void setPhotoName(String photoName)
+	{
+		this.photoName = photoName;
 	}
 }

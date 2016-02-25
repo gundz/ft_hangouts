@@ -65,7 +65,7 @@ public class ContactsListAdapter extends BaseAdapter
 		contact = contactList.get(position);
 		viewHolder.textViewName.setText(contact.getFullName());
 		viewHolder.textViewNumber.setText(contact.getNumber());
-		viewHolder.imageViewContactPhoto.setImageBitmap(ContactPhoto.loadImageFromStorage(context, contact));
+		viewHolder.imageViewContactPhoto.setImageBitmap(ContactPhoto.loadImageFromStorage(context, contact.getPhotoName()));
 
 		return v;
 	}

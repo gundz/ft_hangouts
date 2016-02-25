@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,9 +26,6 @@ import com.fgundlac.ft_hangouts.R;
 
 public class ShowContactActivity extends BaseClass
 {
-	int id;
-	ContactsDataSource database;
-	Contact contact;
 	public View.OnClickListener callOnClickListener = new View.OnClickListener()
 	{
 		@Override
@@ -41,6 +39,7 @@ public class ShowContactActivity extends BaseClass
 			startActivity(intent);
 		}
 	};
+
 	public View.OnClickListener smsOnClickListener = new View.OnClickListener()
 	{
 		@Override
@@ -51,6 +50,7 @@ public class ShowContactActivity extends BaseClass
 			startActivity(intent);
 		}
 	};
+
 	public View.OnClickListener emailOnClickListener = new View.OnClickListener()
 	{
 		@Override
@@ -68,6 +68,10 @@ public class ShowContactActivity extends BaseClass
 			}
 		}
 	};
+
+	int id;
+	ContactsDataSource database;
+	Contact contact;
 	TextView nameTextView;
 	TextView nicknameTextView;
 	TextView numberTextView;
@@ -144,7 +148,6 @@ public class ShowContactActivity extends BaseClass
 			public void onClick(View v)
 			{
 				Intent i = new Intent(getApplicationContext(), ContactPhoto.class);
-				i.putExtra("com.fgundlac.ft_hangouts.contact.photo.contact", contact);
 				startActivityForResult(i, ContactPhoto.CAMERA_REQUEST);
 			}
 		});
@@ -155,7 +158,15 @@ public class ShowContactActivity extends BaseClass
 		if (requestCode == ContactPhoto.CAMERA_REQUEST && resultCode == RESULT_OK)
 		{
 			ImageView photo = (ImageView) findViewById(R.id.contactPhoto);
-			photo.setImageBitmap(ContactPhoto.loadImageFromStorage(getApplicationContext(), contact));
+			String photoName = data.getStringExtra("com.fgundlac.ft_hangouts.camera.photoName");
+			contact.setPhotoName(photoName);
+
+			ContactsDataSource d = new ContactsDataSource(this);
+			d.open();
+			d.update(contact);
+			d.close();
+
+			photo.setImageBitmap(ContactPhoto.loadImageFromStorage(getApplicationContext(), contact.getPhotoName()));
 		}
 	}
 
@@ -190,7 +201,7 @@ public class ShowContactActivity extends BaseClass
 		}
 
 		ImageView photo = (ImageView) findViewById(R.id.contactPhoto);
-		photo.setImageBitmap(ContactPhoto.loadImageFromStorage(getApplicationContext(), contact));
+		photo.setImageBitmap(ContactPhoto.loadImageFromStorage(getApplicationContext(), contact.getPhotoName()));
 	}
 
 	protected void editContact()
