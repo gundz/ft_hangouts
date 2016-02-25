@@ -140,34 +140,6 @@ public class ShowContactActivity extends BaseClass
 		database.close();
 
 		setContactInfos(contact);
-
-		Button takePhoto = (Button) findViewById(R.id.takePhoto);
-		takePhoto.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				Intent i = new Intent(getApplicationContext(), ContactPhoto.class);
-				startActivityForResult(i, ContactPhoto.CAMERA_REQUEST);
-			}
-		});
-	}
-
-	public void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		if (requestCode == ContactPhoto.CAMERA_REQUEST && resultCode == RESULT_OK)
-		{
-			ImageView photo = (ImageView) findViewById(R.id.contactPhoto);
-			String photoName = data.getStringExtra("com.fgundlac.ft_hangouts.camera.photoName");
-			contact.setPhotoName(photoName);
-
-			ContactsDataSource d = new ContactsDataSource(this);
-			d.open();
-			d.update(contact);
-			d.close();
-
-			photo.setImageBitmap(ContactPhoto.loadImageFromStorage(getApplicationContext(), contact.getPhotoName()));
-		}
 	}
 
 	private void setContactInfos(Contact c)

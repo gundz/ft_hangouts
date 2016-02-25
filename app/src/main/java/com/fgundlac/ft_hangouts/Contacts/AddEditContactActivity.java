@@ -1,13 +1,18 @@
 package com.fgundlac.ft_hangouts.Contacts;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.fgundlac.ft_hangouts.BaseClass;
 import com.fgundlac.ft_hangouts.R;
@@ -19,6 +24,7 @@ public class AddEditContactActivity extends BaseClass
 	EditText nicknameEditText;
 	EditText numberEditText;
 	EditText emailEditText;
+	ImageButton photoImageButton;
 	FloatingActionButton saveContactButton;
 
 	Contact contact;
@@ -44,6 +50,8 @@ public class AddEditContactActivity extends BaseClass
 		nicknameEditText = (EditText) findViewById(R.id.nicknameEditText);
 		numberEditText = (EditText) findViewById(R.id.numberEditText);
 		emailEditText = (EditText) findViewById(R.id.emailEditText);
+		photoImageButton = (ImageButton) findViewById(R.id.takePhoto);
+		photoImageButton.setOnClickListener(photoImageButtonOnClickListener);
 		saveContactButton = (FloatingActionButton) findViewById(R.id.saveContactButton);
 		saveContactButton.setOnClickListener(saveContactButtonListener);
 	}
@@ -77,6 +85,7 @@ public class AddEditContactActivity extends BaseClass
 		nicknameEditText.setText(c.getNickname());
 		numberEditText.setText(c.getNumber());
 		emailEditText.setText(c.getEmail());
+		photoImageButton.setImageBitmap(ContactPhoto.loadImageFromStorage(this, contact.getPhotoName()));
 	}
 
 	public void saveContact()
@@ -97,6 +106,29 @@ public class AddEditContactActivity extends BaseClass
 			database.update(contact);
 		}
 		database.close();
+	}
+
+	public View.OnClickListener photoImageButtonOnClickListener = new View.OnClickListener()
+	{
+		@Override
+		public void onClick(View v)
+		{
+			Intent i = new Intent(getApplicationContext(), ContactPhoto.class);
+			startActivityForResult(i, ContactPhoto.CAMERA_REQUEST);
+		}
+	};
+
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if (requestCode == ContactPhoto.CAMERA_REQUEST && resultCode == RESULT_OK)
+		{
+			String photoName = data.getStringExtra("com.fgundlac.ft_hangouts.camera.photoName");
+			contact.setPhotoName(photoName);
+
+			Bitmap photo = ContactPhoto.loadImageFromStorage(this, contact.getPhotoName());
+			if (photo != null)
+				photoImageButton.setImageBitmap(photo);
+		}
 	}
 
 	@Override

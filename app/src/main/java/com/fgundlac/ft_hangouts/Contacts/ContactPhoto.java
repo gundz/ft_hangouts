@@ -99,6 +99,8 @@ public class ContactPhoto extends BaseClass
 			databackIntent.putExtra("com.fgundlac.ft_hangouts.camera.photoName", photoName);
 			setResult(RESULT_OK, databackIntent);
 		}
+		else
+			setResult(RESULT_CANCELED);
 		finish();
 	}
 }
