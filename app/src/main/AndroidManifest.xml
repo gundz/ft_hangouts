@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.fgundlac.ft_hangouts"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+	package="com.fgundlac.ft_hangouts"
+	xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<uses-permission android:name="android.permission.CALL_PHONE"/>
 	<uses-permission android:name="android.permission.SEND_SMS"/>
 	<uses-permission android:name="android.permission.RECEIVE_SMS"/>
 
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.CAMERA"/>
+
 	<application
 		android:allowBackup="true"
 		android:icon="@mipmap/ic_launcher"
 		android:label="@string/app_name"
+		android:launchMode="singleTop"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
 
-		<activity android:name=".MainActivity">
+		<activity
+			android:name=".MainActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
-
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
@@ -30,17 +35,28 @@
 		<activity
 			android:name=".Contacts.ShowContactActivity"
 			android:parentActivityName=".MainActivity">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".MainActivity"/>
 		</activity>
 
 		<activity android:name=".Contacts.AddEditContactActivity">
 		</activity>
 
-		<activity android:name=".Contacts.SMSActivity">
+		<activity
+			android:name=".Contacts.SMSActivity"
+			android:parentActivityName=".Contacts.ShowContactActivity">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".Contacts.ShowContactActivity"/>
+		</activity>
+
+		<activity android:name=".Contacts.ContactPhoto">
 		</activity>
 
 		<receiver android:name=".Contacts.SMSBroadcastReceiver">
 			<intent-filter>
-				<action android:name="android.provider.Telephony.SMS_RECEIVED" />
+				<action android:name="android.provider.Telephony.SMS_RECEIVED"/>
 			</intent-filter>
 		</receiver>
 	</application>

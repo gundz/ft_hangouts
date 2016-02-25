@@ -21,4 +21,8 @@
 	<string name="settings_actionBarColorList_title">Choisir la couleur de la barre</string>
 	<string name="settings_theme_title">Thème</string>
 	<string name="choose_action">Selectionner l\'action à effectuer</string>
+	<string name="contact_photo">Photo</string>
+	<string name="color_red">Rouge</string>
+	<string name="color_blue">Bleu</string>
+	<string name="color_green">Vert</string>
 </resources>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fgundlac.ft_hangouts.R;
@@ -15,25 +16,9 @@ import java.util.List;
 
 public class ContactsListAdapter extends BaseAdapter
 {
-	private Activity            context;
-	private List<Contact>       contactList;
-	private LayoutInflater      layoutInflater = null;
-
-	class ContactListViewHolder
-	{
-		public TextView textViewName;
-		public TextView textViewNickname;
-		public TextView textViewNumber;
-		public TextView textViewEmail;
-
-		public ContactListViewHolder(View base)
-		{
-			textViewName = (TextView) base.findViewById(R.id.nameTextView);
-			textViewNickname = (TextView) base.findViewById(R.id.nicknameTextView);
-			textViewNumber = (TextView) base.findViewById(R.id.numberTextView);
-			textViewEmail = (TextView) base.findViewById(R.id.emailTextView);
-		}
-	}
+	private Activity context;
+	private List<Contact> contactList;
+	private LayoutInflater layoutInflater = null;
 
 	public ContactsListAdapter(Activity context, ArrayList<Contact> contactList)
 	{
@@ -63,13 +48,13 @@ public class ContactsListAdapter extends BaseAdapter
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-		View                    v = convertView;
-		ContactListViewHolder   viewHolder;
-		Contact                 contact;
+		View v = convertView;
+		ContactListViewHolder viewHolder;
+		Contact contact;
 
 		if (convertView == null)
 		{
-			v = layoutInflater.inflate(R.layout.contact_list_item, null);
+			v = layoutInflater.inflate(R.layout.contact_list_item, parent, false);
 			viewHolder = new ContactListViewHolder(v);
 			v.setTag(viewHolder);
 		}
@@ -79,10 +64,23 @@ public class ContactsListAdapter extends BaseAdapter
 		}
 		contact = contactList.get(position);
 		viewHolder.textViewName.setText(contact.getFullName());
-		viewHolder.textViewNickname.setText(contact.getNickname());
 		viewHolder.textViewNumber.setText(contact.getNumber());
-		viewHolder.textViewEmail.setText(contact.getEmail());
+		viewHolder.imageViewContactPhoto.setImageBitmap(ContactPhoto.loadImageFromStorage(context, contact.getPhotoName()));
 
 		return v;
+	}
+
+	class ContactListViewHolder
+	{
+		public TextView textViewName;
+		public TextView textViewNumber;
+		public ImageView imageViewContactPhoto;
+
+		public ContactListViewHolder(View base)
+		{
+			textViewName = (TextView) base.findViewById(R.id.nameTextView);
+			textViewNumber = (TextView) base.findViewById(R.id.numberTextView);
+			imageViewContactPhoto = (ImageView) base.findViewById(R.id.contactPhoto);
+		}
 	}
 }

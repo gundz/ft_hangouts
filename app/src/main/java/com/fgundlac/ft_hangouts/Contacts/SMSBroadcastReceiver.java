@@ -24,9 +24,13 @@ public class SMSBroadcastReceiver extends BroadcastReceiver
 				for (int i = 0; i < pdus.length; i++)
 				{
 					if (Build.VERSION.SDK_INT >= 23)
+					{
 						messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i], "3gpp");
+					}
 					else
+					{
 						messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
+					}
 				}
 				for (SmsMessage message : messages)
 				{
@@ -42,7 +46,6 @@ public class SMSBroadcastReceiver extends BroadcastReceiver
 					i.putExtra("com.fgundlac.ft_hangouts.sms.received.sms", sms);
 					context.sendBroadcast(i);
 
-
 					ContactsDataSource contactsDataSource = new ContactsDataSource(context);
 					if (!contactsDataSource.checkIfNumberExits(sms.getNumber()))
 					{
@@ -52,7 +55,6 @@ public class SMSBroadcastReceiver extends BroadcastReceiver
 						i = new Intent("com.fgundlac.ft_hangouts.contact.added");
 						i.putExtra("com.fgundlac.ft_hangouts.contact.added.contact", c);
 						context.sendBroadcast(i);
-
 					}
 				}
 			}

@@ -10,65 +10,6 @@ import java.util.Locale;
 
 public class Contact implements Parcelable
 {
-	protected static final int NUMBER_COMP = 9;
-
-	protected long      id;
-	protected String    name = "";
-	protected String    lastName = "";
-	protected String    nickname = "";
-	protected String    number = "";
-	protected String    email = "";
-
-	public Contact()
-	{
-	}
-
-	public Contact(String name, String number)
-	{
-		this.name = name;
-		this.number = number;
-	}
-
-	static public boolean compareNumber(String a, String b)
-	{
-		if (Build.VERSION.SDK_INT >= 21)
-		{
-			a = PhoneNumberUtils.formatNumberToE164(a, Locale.getDefault().getCountry());
-			b = PhoneNumberUtils.formatNumberToE164(b, Locale.getDefault().getCountry());
-			if (PhoneNumberUtils.compare(a, b))
-				return true;
-		}
-		else
-		{
-			a = new StringBuilder(a).reverse().toString();
-			b = new StringBuilder(b).reverse().toString();
-			int i = 0;
-			while (i < a.length() && i < b.length() && a.charAt(i) == b.charAt(i))
-				i++;
-			return (i >= NUMBER_COMP);
-		}
-		return false;
-	}
-
-	public void deleteOnBDD(Context context)
-	{
-		ContactsDataSource contactDatabase = new ContactsDataSource(context);
-
-		contactDatabase.open();
-		contactDatabase.deleteContact(this);
-		contactDatabase.close();
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags)
-	{
-		dest.writeInt((int)id);
-		dest.writeString(name);
-		dest.writeString(lastName);
-		dest.writeString(nickname);
-		dest.writeString(number);
-		dest.writeString(email);
-	}
 
 	public static final Parcelable.Creator<Contact> CREATOR = new Parcelable.Creator<Contact>()
 	{
@@ -84,8 +25,26 @@ public class Contact implements Parcelable
 			return new Contact[size];
 		}
 	};
+	protected static final int NUMBER_COMP = 9;
+	protected long id;
+	protected String name = "";
+	protected String lastName = "";
+	protected String nickname = "";
+	protected String number = "";
+	protected String email = "";
+	protected String photoName;
 
-	public Contact (Parcel in)
+	public Contact()
+	{
+	}
+
+	public Contact(String name, String number)
+	{
+		this.name = name;
+		this.number = number;
+	}
+
+	public Contact(Parcel in)
 	{
 		this.id = in.readInt();
 		this.name = in.readString();
@@ -93,6 +52,56 @@ public class Contact implements Parcelable
 		this.nickname = in.readString();
 		this.number = in.readString();
 		this.email = in.readString();
+	}
+
+	static public boolean compareNumber(String a, String b)
+	{
+		if (Build.VERSION.SDK_INT >= 21)
+		{
+			a = PhoneNumberUtils.formatNumberToE164(a, Locale.getDefault().getCountry());
+			b = PhoneNumberUtils.formatNumberToE164(b, Locale.getDefault().getCountry());
+			if (PhoneNumberUtils.compare(a, b))
+			{
+				return true;
+			}
+		}
+		else
+		{
+			a = new StringBuilder(a).reverse().toString();
+			b = new StringBuilder(b).reverse().toString();
+			int i = 0;
+			while (i < a.length() && i < b.length() && a.charAt(i) == b.charAt(i))
+				i++;
+			return (i >= NUMBER_COMP);
+		}
+		return false;
+	}
+
+	@Override
+	public int describeContents()
+	{
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags)
+	{
+		dest.writeInt((int) id);
+		dest.writeString(name);
+		dest.writeString(lastName);
+		dest.writeString(nickname);
+		dest.writeString(number);
+		dest.writeString(email);
+		dest.writeString(photoName);
+	}
+
+	public void deleteOnBDD(Context context)
+	{
+		ContactsDataSource contactDatabase = new ContactsDataSource(context);
+
+		contactDatabase.open();
+		contactDatabase.deleteContact(this);
+		contactDatabase.close();
 	}
 
 	public long getId()
@@ -160,9 +169,13 @@ public class Contact implements Parcelable
 		this.email = email;
 	}
 
-	@Override
-	public int describeContents()
+	public String getPhotoName()
 	{
-		return 0;
+		return photoName;
+	}
+
+	public void setPhotoName(String photoName)
+	{
+		this.photoName = photoName;
 	}
 }

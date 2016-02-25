@@ -11,33 +11,20 @@ import java.util.Locale;
 
 public class SMS implements Parcelable
 {
-	public enum Type
+	public static final Parcelable.Creator<SMS> CREATOR = new Parcelable.Creator<SMS>()
 	{
-		RECEIVED(0), SENDED(1);
-
-		private int _value;
-
-		Type(int value)
+		@Override
+		public SMS createFromParcel(Parcel source)
 		{
-			this._value = value;
+			return new SMS(source);
 		}
 
-		public int getValue()
+		@Override
+		public SMS[] newArray(int size)
 		{
-			return _value;
+			return new SMS[size];
 		}
-
-		public static Type fromInt(int i)
-		{
-			for (Type b : Type.values())
-			{
-				if (b.getValue() == i)
-					return b;
-			}
-			return null;
-		}
-	}
-
+	};
 	protected long id;
 	protected String number;
 	protected String content;
@@ -54,6 +41,14 @@ public class SMS implements Parcelable
 		this.content = content;
 		this.type = type;
 		this.date = date;
+	}
+
+	public SMS(Parcel in)
+	{
+		this.number = in.readString();
+		this.content = in.readString();
+		this.type = Type.fromInt(in.readInt());
+		setDateFormated(in.readString());
 	}
 
 	public void deleteOnBDD(Context context)
@@ -110,6 +105,11 @@ public class SMS implements Parcelable
 		return date;
 	}
 
+	public void setDate(Calendar date)
+	{
+		this.date = date;
+	}
+
 	public String getDateFormated()
 	{
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
@@ -124,16 +124,10 @@ public class SMS implements Parcelable
 		try
 		{
 			c.setTime(dateFormat.parse(date));
-		}
-		catch (ParseException e)
+		} catch (ParseException e)
 		{
 		}
 		setDate(c);
-	}
-
-	public void setDate(Calendar date)
-	{
-		this.date = date;
 	}
 
 	@Override
@@ -151,26 +145,32 @@ public class SMS implements Parcelable
 		dest.writeString(getDateFormated());
 	}
 
-	public static final Parcelable.Creator<SMS> CREATOR = new Parcelable.Creator<SMS>()
+	public enum Type
 	{
-		@Override
-		public SMS createFromParcel(Parcel source)
+		RECEIVED(0), SENDED(1);
+
+		private int _value;
+
+		Type(int value)
 		{
-			return new SMS(source);
+			this._value = value;
 		}
 
-		@Override
-		public SMS[] newArray(int size)
+		public static Type fromInt(int i)
 		{
-			return new SMS[size];
+			for (Type b : Type.values())
+			{
+				if (b.getValue() == i)
+				{
+					return b;
+				}
+			}
+			return null;
 		}
-	};
 
-	public SMS (Parcel in)
-	{
-		this.number = in.readString();
-		this.content = in.readString();
-		this.type = Type.fromInt(in.readInt());
-		setDateFormated(in.readString());
+		public int getValue()
+		{
+			return _value;
+		}
 	}
 }

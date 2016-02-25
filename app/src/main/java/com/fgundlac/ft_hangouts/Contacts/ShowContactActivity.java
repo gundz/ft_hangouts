@@ -9,11 +9,13 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,17 +27,60 @@ public class ShowContactActivity extends BaseClass
 	int id;
 	ContactsDataSource database;
 	Contact contact;
+	public View.OnClickListener callOnClickListener = new View.OnClickListener()
+	{
+		@Override
+		public void onClick(View v)
+		{
+			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact.getNumber()));
+			if (ActivityCompat.checkSelfPermission(ShowContactActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+			{
+				return;
+			}
+			startActivity(intent);
+		}
+	};
+	public View.OnClickListener smsOnClickListener = new View.OnClickListener()
+	{
+		@Override
+		public void onClick(View v)
+		{
+			Intent intent = new Intent(ShowContactActivity.this, SMSActivity.class);
+			intent.putExtra("com.fgundlac.ft_hangouts.contact.sms", (int) contact.getId());
+			startActivity(intent);
+		}
+	};
+	public View.OnClickListener emailOnClickListener = new View.OnClickListener()
+	{
+		@Override
+		public void onClick(View v)
+		{
+			Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + contact.getEmail()));
+			if (intent.resolveActivity(getPackageManager()) != null)
+			{
+				startActivity(intent);
+			}
+			else
+			{
+				Snackbar snackbar = Snackbar.make(v, "There is no email client on your device !", Snackbar.LENGTH_SHORT);
+				snackbar.show();
+			}
+		}
+	};
 	TextView nameTextView;
 	TextView nicknameTextView;
 	TextView numberTextView;
 	TextView emailTextView;
-
 	ImageButton callButton;
 	ImageButton smsButton;
 	ImageButton emailButton;
 
 	private void initViews()
 	{
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 		nameTextView = (TextView) findViewById(R.id.nameTextView);
 		nicknameTextView = (TextView) findViewById(R.id.nicknameTextView);
 		numberTextView = (TextView) findViewById(R.id.numberTextView);
@@ -73,7 +118,9 @@ public class ShowContactActivity extends BaseClass
 		initViews();
 
 		if ((id = getIntent().getIntExtra("com.fgundlac.ft_hangouts.contact.show", -1)) == -1)
+		{
 			finish();
+		}
 
 		database = new ContactsDataSource(this);
 	}
@@ -92,10 +139,8 @@ public class ShowContactActivity extends BaseClass
 
 	private void setContactInfos(Contact c)
 	{
-		String name = c.getName() + " " + c.getLastName();
-
-		setTitle(name);
-		nameTextView.setText(name);
+		getSupportActionBar().setTitle(c.getFullName());
+		nameTextView.setText(c.getFullName());
 		nicknameTextView.setText(c.getNickname());
 
 		LinearLayout l;
@@ -121,12 +166,15 @@ public class ShowContactActivity extends BaseClass
 			emailTextView.setText(c.getEmail());
 			l.setVisibility(LinearLayout.VISIBLE);
 		}
+
+		ImageView photo = (ImageView) findViewById(R.id.contactPhoto);
+		photo.setImageBitmap(ContactPhoto.loadImageFromStorage(getApplicationContext(), contact.getPhotoName()));
 	}
 
 	protected void editContact()
 	{
 		Intent intent = new Intent(this, AddEditContactActivity.class);
-		intent.putExtra("com.fgundlac.ft_hangouts.contact.edit", (int)contact.getId());
+		intent.putExtra("com.fgundlac.ft_hangouts.contact.edit", (int) contact.getId());
 		startActivity(intent);
 	}
 
@@ -155,45 +203,6 @@ public class ShowContactActivity extends BaseClass
 				.setIcon(R.drawable.ic_action_warning)
 				.show();
 	}
-
-	public View.OnClickListener callOnClickListener = new View.OnClickListener()
-	{
-		@Override
-		public void onClick(View v)
-		{
-			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact.getNumber()));
-			if (ActivityCompat.checkSelfPermission(ShowContactActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
-				return;
-			startActivity(intent);
-		}
-	};
-
-	public View.OnClickListener smsOnClickListener = new View.OnClickListener()
-	{
-		@Override
-		public void onClick(View v)
-		{
-			Intent intent = new Intent(ShowContactActivity.this, SMSActivity.class);
-			intent.putExtra("com.fgundlac.ft_hangouts.contact.sms", (int)contact.getId());
-			startActivity(intent);
-		}
-	};
-
-	public View.OnClickListener emailOnClickListener = new View.OnClickListener()
-	{
-		@Override
-		public void onClick(View v)
-		{
-			Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + contact.getEmail()));
-			if (intent.resolveActivity(getPackageManager()) != null)
-				startActivity(intent);
-			else
-			{
-				Snackbar snackbar = Snackbar.make(v, "There is no email client on your device !", Snackbar.LENGTH_SHORT);
-				snackbar.show();
-			}
-		}
-	};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)

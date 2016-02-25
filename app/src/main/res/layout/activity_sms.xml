@@ -1,56 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	tools:context=".Contacts.SMSActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".Contacts.SMSActivity">
 
-	<ListView
-		android:id="@+id/smsListView"
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/toolbar"
+		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:paddingLeft="@dimen/activity_horizontal_margin"
-		android:paddingRight="@dimen/activity_horizontal_margin"
-		android:paddingTop="@dimen/activity_vertical_margin"
-		android:paddingBottom="@dimen/activity_vertical_margin"
-		android:layout_above="@+id/SMSInput">
-	</ListView>
+		android:layout_alignParentTop="true"
+		android:minHeight="?android:attr/actionBarSize"
+		app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-	<RelativeLayout
-		android:id="@+id/SMSInput"
+	<include
+		android:id="@+id/content"
+		layout="@layout/activity_sms_content"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
-		android:background="@android:color/white">
-
-		<View
-			android:id="@+id/SMSInputDivider"
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:background="#7faaaaaa"/>
-
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/SMSInputDivider"
-			android:orientation="horizontal">
-
-			<EditText
-				android:id="@+id/SMSEditText"
-				android:inputType="textMultiLine"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:layout_weight="20"/>
-
-			<ImageButton
-				android:id="@+id/SMSSend"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:src="@drawable/ic_send"
-				android:layout_weight="80"
-				android:background="#ffffff"/>
-		</LinearLayout>
-	</RelativeLayout>
+		android:layout_below="@+id/toolbar"/>
 
 </RelativeLayout>

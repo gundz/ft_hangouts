@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class SMSDataSource
 {
-	private SQLiteDatabase          database;
-	private MySQLiteHelper          dbHelper;
+	private SQLiteDatabase database;
+	private MySQLiteHelper dbHelper;
 
 	public SMSDataSource(Context context)
 	{
@@ -32,7 +32,7 @@ public class SMSDataSource
 
 	public SMS insert(SMS sms)
 	{
-		ContentValues               value = new ContentValues();
+		ContentValues value = new ContentValues();
 
 		value.put(MySQLiteHelper.SMS_NUMBER, sms.getNumber());
 		value.put(MySQLiteHelper.SMS_CONTENT, sms.getContent());
@@ -54,21 +54,25 @@ public class SMSDataSource
 
 		cursor.moveToFirst();
 		if (cursor.getCount() == 0)
+		{
 			return null;
+		}
 		return cursorToSMS(cursor);
 	}
 
 	public ArrayList<SMS> getSMSFromContact(Contact contact)
 	{
-		ArrayList<SMS>              smsList = new ArrayList<>();
-		Cursor                      cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.SMS_TABLE, null);
+		ArrayList<SMS> smsList = new ArrayList<>();
+		Cursor cursor = database.rawQuery("SELECT * FROM " + MySQLiteHelper.SMS_TABLE, null);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast())
 		{
 			SMS sms = cursorToSMS(cursor);
 			if (Contact.compareNumber(sms.getNumber(), contact.getNumber()))
+			{
 				smsList.add(sms);
+			}
 			cursor.moveToNext();
 		}
 		cursor.close();
@@ -77,8 +81,8 @@ public class SMSDataSource
 
 	private SMS cursorToSMS(Cursor cursor)
 	{
-		SMS                         sms = new SMS();
-		int                         i = 0;
+		SMS sms = new SMS();
+		int i = 0;
 
 		sms.setId(cursor.getLong(i++));
 		sms.setNumber(cursor.getString(i++));
