@@ -1,13 +1,11 @@
 package com.fgundlac.ft_hangouts.Contacts;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.fgundlac.ft_hangouts.BaseClass;
 import com.fgundlac.ft_hangouts.R;
@@ -17,7 +15,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class ContactPhoto extends BaseClass
@@ -46,7 +43,9 @@ public class ContactPhoto extends BaseClass
 		Bitmap bitmap = null;
 
 		if (photoName == null)
+		{
 			return BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_people);
+		}
 
 		try
 		{
@@ -98,7 +97,9 @@ public class ContactPhoto extends BaseClass
 			setResult(RESULT_OK, databackIntent);
 		}
 		else
+		{
 			setResult(RESULT_CANCELED);
+		}
 		finish();
 	}
 }

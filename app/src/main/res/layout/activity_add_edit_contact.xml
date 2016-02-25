@@ -28,7 +28,6 @@
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
 		android:layout_alignParentEnd="true"
-		android:layout_alignParentRight="true"
 		android:contentDescription="@string/contact_save"
 		android:src="@drawable/ic_action_tick"/>
 

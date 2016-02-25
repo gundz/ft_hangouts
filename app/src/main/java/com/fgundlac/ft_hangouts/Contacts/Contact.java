@@ -11,24 +11,6 @@ import java.util.Locale;
 public class Contact implements Parcelable
 {
 
-	@Override
-	public int describeContents()
-	{
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags)
-	{
-		dest.writeInt((int) id);
-		dest.writeString(name);
-		dest.writeString(lastName);
-		dest.writeString(nickname);
-		dest.writeString(number);
-		dest.writeString(email);
-		dest.writeString(photoName);
-	}
-
 	public static final Parcelable.Creator<Contact> CREATOR = new Parcelable.Creator<Contact>()
 	{
 		@Override
@@ -43,7 +25,6 @@ public class Contact implements Parcelable
 			return new Contact[size];
 		}
 	};
-
 	protected static final int NUMBER_COMP = 9;
 	protected long id;
 	protected String name = "";
@@ -94,6 +75,24 @@ public class Contact implements Parcelable
 			return (i >= NUMBER_COMP);
 		}
 		return false;
+	}
+
+	@Override
+	public int describeContents()
+	{
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags)
+	{
+		dest.writeInt((int) id);
+		dest.writeString(name);
+		dest.writeString(lastName);
+		dest.writeString(nickname);
+		dest.writeString(number);
+		dest.writeString(email);
+		dest.writeString(photoName);
 	}
 
 	public void deleteOnBDD(Context context)

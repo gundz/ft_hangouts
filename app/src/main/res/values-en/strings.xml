@@ -22,4 +22,7 @@
 	<string name="settings_actionBarColorList_title">Choose action bar color</string>
 	<string name="settings_theme_title">Theme</string>
 	<string name="contact_photo">Contact photo</string>
+	<string name="color_red">Red</string>
+	<string name="color_blue">Blue</string>
+	<string name="color_green">Green</string>
 </resources>

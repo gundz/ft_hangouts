@@ -61,7 +61,7 @@ public class SMSListAdapter extends BaseAdapter
 
 		if (convertView == null)
 		{
-			v = layoutInflater.inflate(R.layout.sms_list_item, null);
+			v = layoutInflater.inflate(R.layout.sms_list_item, parent, false);
 			viewHolder = new SMSListViewHolder(v);
 			v.setTag(viewHolder);
 		}

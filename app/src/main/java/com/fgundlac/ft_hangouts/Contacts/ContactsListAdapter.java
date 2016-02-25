@@ -54,7 +54,7 @@ public class ContactsListAdapter extends BaseAdapter
 
 		if (convertView == null)
 		{
-			v = layoutInflater.inflate(R.layout.contact_list_item, null);
+			v = layoutInflater.inflate(R.layout.contact_list_item, parent, false);
 			viewHolder = new ContactListViewHolder(v);
 			v.setTag(viewHolder);
 		}

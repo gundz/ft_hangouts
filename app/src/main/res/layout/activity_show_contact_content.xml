@@ -10,6 +10,7 @@
 		android:id="@+id/contactPhoto"
 		android:layout_width="match_parent"
 		android:layout_height="150dp"
+		android:contentDescription="@string/contact_photo"
 		android:scaleType="centerCrop"/>
 
 	<LinearLayout

@@ -10,12 +10,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +24,9 @@ import com.fgundlac.ft_hangouts.R;
 
 public class ShowContactActivity extends BaseClass
 {
+	int id;
+	ContactsDataSource database;
+	Contact contact;
 	public View.OnClickListener callOnClickListener = new View.OnClickListener()
 	{
 		@Override
@@ -39,7 +40,6 @@ public class ShowContactActivity extends BaseClass
 			startActivity(intent);
 		}
 	};
-
 	public View.OnClickListener smsOnClickListener = new View.OnClickListener()
 	{
 		@Override
@@ -50,7 +50,6 @@ public class ShowContactActivity extends BaseClass
 			startActivity(intent);
 		}
 	};
-
 	public View.OnClickListener emailOnClickListener = new View.OnClickListener()
 	{
 		@Override
@@ -68,10 +67,6 @@ public class ShowContactActivity extends BaseClass
 			}
 		}
 	};
-
-	int id;
-	ContactsDataSource database;
-	Contact contact;
 	TextView nameTextView;
 	TextView nicknameTextView;
 	TextView numberTextView;

@@ -5,20 +5,27 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import com.fgundlac.ft_hangouts.BaseClass;
 import com.fgundlac.ft_hangouts.R;
 
 public class AddEditContactActivity extends BaseClass
 {
+	public View.OnClickListener photoImageButtonOnClickListener = new View.OnClickListener()
+	{
+		@Override
+		public void onClick(View v)
+		{
+			Intent i = new Intent(getApplicationContext(), ContactPhoto.class);
+			startActivityForResult(i, ContactPhoto.CAMERA_REQUEST);
+		}
+	};
 	EditText nameEditText;
 	EditText lastNameEditText;
 	EditText nicknameEditText;
@@ -26,7 +33,6 @@ public class AddEditContactActivity extends BaseClass
 	EditText emailEditText;
 	ImageButton photoImageButton;
 	FloatingActionButton saveContactButton;
-
 	Contact contact;
 	int id;
 	ContactsDataSource database;
@@ -108,16 +114,6 @@ public class AddEditContactActivity extends BaseClass
 		database.close();
 	}
 
-	public View.OnClickListener photoImageButtonOnClickListener = new View.OnClickListener()
-	{
-		@Override
-		public void onClick(View v)
-		{
-			Intent i = new Intent(getApplicationContext(), ContactPhoto.class);
-			startActivityForResult(i, ContactPhoto.CAMERA_REQUEST);
-		}
-	};
-
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		if (requestCode == ContactPhoto.CAMERA_REQUEST && resultCode == RESULT_OK)
@@ -127,7 +123,9 @@ public class AddEditContactActivity extends BaseClass
 
 			Bitmap photo = ContactPhoto.loadImageFromStorage(this, contact.getPhotoName());
 			if (photo != null)
+			{
 				photoImageButton.setImageBitmap(photo);
+			}
 		}
 	}
 

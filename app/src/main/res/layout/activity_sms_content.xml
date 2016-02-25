@@ -49,6 +49,7 @@
 				android:layout_height="match_parent"
 				android:layout_weight="80"
 				android:background="#ffffff"
+				android:contentDescription="@string/contact_photo"
 				android:src="@drawable/ic_send"/>
 		</LinearLayout>
 	</RelativeLayout>

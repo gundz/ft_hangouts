@@ -46,7 +46,6 @@ public class SMSBroadcastReceiver extends BroadcastReceiver
 					i.putExtra("com.fgundlac.ft_hangouts.sms.received.sms", sms);
 					context.sendBroadcast(i);
 
-
 					ContactsDataSource contactsDataSource = new ContactsDataSource(context);
 					if (!contactsDataSource.checkIfNumberExits(sms.getNumber()))
 					{
@@ -56,7 +55,6 @@ public class SMSBroadcastReceiver extends BroadcastReceiver
 						i = new Intent("com.fgundlac.ft_hangouts.contact.added");
 						i.putExtra("com.fgundlac.ft_hangouts.contact.added.contact", c);
 						context.sendBroadcast(i);
-
 					}
 				}
 			}
