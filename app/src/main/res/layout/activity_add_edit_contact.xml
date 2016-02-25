@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 tools:context="com.fgundlac.ft_hangouts.Contacts.AddEditContactActivity">
 
 	<android.support.v7.widget.Toolbar
@@ -12,8 +12,8 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentTop="true"
-		app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-		android:minHeight="?android:attr/actionBarSize"/>
+		android:minHeight="?android:attr/actionBarSize"
+		app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
 	<include
 		layout="@layout/activity_add_edit_contact_content"
