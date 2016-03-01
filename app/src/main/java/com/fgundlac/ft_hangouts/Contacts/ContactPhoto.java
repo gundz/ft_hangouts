@@ -20,7 +20,7 @@ import java.util.Date;
 
 public class ContactPhoto extends BaseClass
 {
-	static final int REQUEST_IMAGE_CAPTURE = 1;
+	public static final int REQUEST_IMAGE_CAPTURE = 1;
 	protected File file;
 
 	static public File getFile(Context context)

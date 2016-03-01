@@ -24,7 +24,7 @@ public class AddEditContactActivity extends BaseClass
 		{
 			Intent i = new Intent(getApplicationContext(), ContactPhoto.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivityForResult(i, ContactPhoto.CAMERA_REQUEST);
+			startActivityForResult(i, ContactPhoto.REQUEST_IMAGE_CAPTURE);
 		}
 	};
 	EditText nameEditText;
@@ -117,7 +117,7 @@ public class AddEditContactActivity extends BaseClass
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
-		if (requestCode == ContactPhoto.CAMERA_REQUEST && resultCode == RESULT_OK)
+		if (requestCode == ContactPhoto.REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
 		{
 			String photoName = data.getStringExtra("com.fgundlac.ft_hangouts.camera.photoName");
 			contact.setPhotoName(photoName);
