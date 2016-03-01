@@ -213,7 +213,7 @@ public class SMSActivity extends BaseClass
 		{
 			// Respond to the action bar's Up/Home button
 			case android.R.id.home:
-				NavUtils.navigateUpFromSameTask(this);
+				finish();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
