@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 
 import com.fgundlac.ft_hangouts.BaseClass;
 import com.fgundlac.ft_hangouts.R;
@@ -19,7 +20,7 @@ import java.util.Date;
 
 public class ContactPhoto extends BaseClass
 {
-	public static final int CAMERA_REQUEST = 1888;
+	static final int REQUEST_IMAGE_CAPTURE = 1;
 	protected File file;
 
 	static public File getFile(Context context)
@@ -79,13 +80,16 @@ public class ContactPhoto extends BaseClass
 
 	public void takeImageFromCamera()
 	{
-		Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-		startActivityForResult(cameraIntent, CAMERA_REQUEST);
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		if (takePictureIntent.resolveActivity(getPackageManager()) != null)
+		{
+			startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+		}
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
-		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK)
+		if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
 		{
 			Bitmap photo = (Bitmap) data.getExtras().get("data");
 			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", getResources().getConfiguration().locale).format(new Date());

@@ -23,6 +23,7 @@ public class AddEditContactActivity extends BaseClass
 		public void onClick(View v)
 		{
 			Intent i = new Intent(getApplicationContext(), ContactPhoto.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivityForResult(i, ContactPhoto.CAMERA_REQUEST);
 		}
 	};
